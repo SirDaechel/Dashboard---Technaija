@@ -12,7 +12,6 @@ import {
   ChartData,
   ChartOptions,
 } from "chart.js";
-import Image from "next/image";
 
 ChartJS.register(
   BarElement,
@@ -23,28 +22,15 @@ ChartJS.register(
   Tooltip
 );
 
-const LineChart = () => {
+const TopCatgeoryChart = () => {
   const isScreenWidth = window.innerWidth;
 
   const data: ChartData<"bar"> = {
-    labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+    labels: ["iPhone", "Andriod", "Accessories"],
     datasets: [
       {
         label: "Revenue",
-        data: [24, 19, 13, 18, 28, 21, 34, 17, 36, 9, 18, 11],
+        data: [9, 18, 11],
         backgroundColor: "#272829",
         borderRadius: 5,
         barPercentage: 0.8,
@@ -56,6 +42,7 @@ const LineChart = () => {
 
   const options: ChartOptions<"bar"> = {
     interaction: {
+      axis: "y",
       intersect: false,
       mode: "index",
     },
@@ -75,7 +62,7 @@ const LineChart = () => {
 
     aspectRatio: isScreenWidth <= 767 ? 0.9 : 2,
 
-    // indexAxis: "y",
+    indexAxis: "y",
 
     scales: {
       x: {
@@ -103,9 +90,6 @@ const LineChart = () => {
         },
 
         ticks: {
-          callback: (value: any) => value + "k",
-          stepSize: 5,
-
           font: {
             family: "'Poppins', sans-serif",
           },
@@ -121,26 +105,15 @@ const LineChart = () => {
   };
 
   return (
-    <section className="border-[1px] border-gray-300 p-8 overflow-hidden col-span-2">
+    <section className="w-full border-[1px] border-gray-300 p-4 overflow-hidden">
       <div className="flex items-center justify-between mb-8">
         <span>
-          <h2 className="font-medium text-xl">Sales Overview</h2>
-          <p className="text-sm">Completed sales made overtime</p>
+          <h2 className="font-medium text-xl">Top selling categories</h2>
         </span>
-        <button type="button" className="flex items-center gap-1">
-          <Image src="/calendar.svg" width={17} height={17} alt="calendar" />
-          <p>This year</p>
-          <Image
-            src="/chevron-arrow-down.svg"
-            width={17}
-            height={17}
-            alt="arrow"
-          />
-        </button>
       </div>
       <Bar data={data} options={options}></Bar>
     </section>
   );
 };
 
-export default LineChart;
+export default TopCatgeoryChart;
