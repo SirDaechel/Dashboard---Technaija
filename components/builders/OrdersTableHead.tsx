@@ -8,7 +8,9 @@ const OrdersTableHead = () => {
         <th className="text-sm text-left">Date</th>
         <th className="text-sm text-left">Amount</th>
         <th className="text-sm text-left">Status</th>
-        <th className="text-sm text-left">Payment method</th>
+        <th>
+          <p className="text-sm text-left w-max">Payment method</p>
+        </th>
       </tr>
     </thead>
   );
