@@ -9,7 +9,10 @@ const OrdersTableBody = ({ fetchedOrders }: OrdersTableBodyProps) => {
     <>
       <tbody>
         {fetchedOrders.reverse().map((order) => (
-          <tr className="border-b-[1px] border-b-solid border-b-gray-200">
+          <tr
+            key={order._id}
+            className="border-b-[1px] border-b-solid border-b-gray-200"
+          >
             <td>
               <p className="text-sm">{order.orderId}</p>
             </td>
