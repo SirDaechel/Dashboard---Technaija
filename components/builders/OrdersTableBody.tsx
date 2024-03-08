@@ -5,6 +5,8 @@ type OrdersTableBodyProps = {
 };
 
 const OrdersTableBody = ({ fetchedOrders }: OrdersTableBodyProps) => {
+  console.log(fetchedOrders);
+
   return (
     <>
       <tbody>
@@ -22,7 +24,7 @@ const OrdersTableBody = ({ fetchedOrders }: OrdersTableBodyProps) => {
               </p>
             </td>
             <td>
-              <p className="text-sm">{[...order.products].join(" | ")}</p>
+              <p className="text-sm"></p>
             </td>
             <td>
               <p className="text-sm w-max">{convertDateFormat(order.date)}</p>

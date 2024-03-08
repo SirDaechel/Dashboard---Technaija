@@ -103,9 +103,30 @@ export const filterOrdersByToday = async () => {
           100
         : 0;
 
+    // Calculate total profit for today (20% of the total revenue)
+    const todayProfit =
+      todayOrders.length > 0
+        ? todayOrders[0].totalAmount - todayOrders[0].totalAmount * 0.2
+        : 0;
+
+    // Calculate total profit for today (20% of the total revenue)
+    const previousDayProfit =
+      previousDayOrders.length > 0
+        ? previousDayOrders[0].totalAmount -
+          previousDayOrders[0].totalAmount * 0.2
+        : 0;
+
+    // Calculate the profit percentage change from previous day total and current day total
+    const profitPercentageChange =
+      todayProfit && previousDayProfit
+        ? ((todayProfit - previousDayProfit) / previousDayProfit) * 100
+        : 0;
+
     return {
       theTotalRevenue: todayOrders.length > 0 ? todayOrders[0].totalAmount : 0,
       percentageChange: percentageChange,
+      theTotalProfit: todayProfit,
+      profitPercentageChange: profitPercentageChange,
     };
   } catch (error) {
     handleError(error);
@@ -183,10 +204,33 @@ export const filterOrdersByLastMonth = async () => {
           100
         : 0;
 
+    // Calculate total profit for last month (20% of the total revenue)
+    const lastMonthProfit =
+      lastMonthsOrders.length > 0
+        ? lastMonthsOrders[0].totalAmount -
+          lastMonthsOrders[0].totalAmount * 0.2
+        : 0;
+
+    // Calculate total profit for before last month (20% of the total revenue)
+    const beforeLastMonthProfit =
+      beforeLastMonthOrders.length > 0
+        ? beforeLastMonthOrders[0].totalAmount -
+          beforeLastMonthOrders[0].totalAmount * 0.2
+        : 0;
+
+    // Calculate the profit percentage change from last month total and before last month total
+    const profitPercentageChange =
+      lastMonthProfit && beforeLastMonthProfit
+        ? ((lastMonthProfit - beforeLastMonthProfit) / beforeLastMonthProfit) *
+          100
+        : 0;
+
     return {
       theTotalRevenue:
         lastMonthsOrders.length > 0 ? lastMonthsOrders[0].totalAmount : 0,
       percentageChange: percentageChange,
+      lastMonthProfit: lastMonthProfit,
+      profitPercentageChange: profitPercentageChange,
     };
   } catch (error) {
     handleError(error);
@@ -254,10 +298,34 @@ export const filterOrdersBySixMonths = async () => {
           100
         : 0;
 
+    // Calculate total profit for last six months (20% of the total revenue)
+    const lastSixMonthProfit =
+      lastSixMonthOrders.length > 0
+        ? lastSixMonthOrders[0].totalAmount -
+          lastSixMonthOrders[0].totalAmount * 0.2
+        : 0;
+
+    // Calculate total profit for before last six months (20% of the total revenue)
+    const beforeLastSixMonthProfit =
+      beforeLastSixMonthOrders.length > 0
+        ? beforeLastSixMonthOrders[0].totalAmount -
+          beforeLastSixMonthOrders[0].totalAmount * 0.2
+        : 0;
+
+    // Calculate the profit percentage change from last month total and before last month total
+    const profitPercentageChange =
+      lastSixMonthProfit && beforeLastSixMonthProfit
+        ? ((lastSixMonthProfit - beforeLastSixMonthProfit) /
+            beforeLastSixMonthProfit) *
+          100
+        : 0;
+
     return {
       theTotalRevenue:
         lastSixMonthOrders.length > 0 ? lastSixMonthOrders[0].totalAmount : 0,
       percentageChange: percentageChange,
+      lastSixMonthProfit: lastSixMonthProfit,
+      profitPercentageChange: profitPercentageChange,
     };
   } catch (error) {
     handleError(error);
@@ -278,7 +346,16 @@ export const filterOrdersByAllTime = async () => {
       },
     ]);
 
-    return orders.length > 0 ? orders[0].totalAmount : 0;
+    // Calculate total all time profit (20% of the total revenue)
+    const allTimeProfit =
+      orders.length > 0
+        ? orders[0].totalAmount - orders[0].totalAmount * 0.2
+        : 0;
+
+    return {
+      allTimeOrders: orders.length > 0 ? orders[0].totalAmount : 0,
+      allTimeProfit: allTimeProfit,
+    };
   } catch (error) {
     handleError(error);
   }
@@ -405,6 +482,63 @@ export const getLastSixMonthsOrders = async () => {
       totalOrders: lastSixMonthsOrders,
       percentageChange: percentageChange,
     };
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Get the total number of orders made in each month
+export const getEachMonthOrderCount = async (year?: number) => {
+  try {
+    await connectToDatabase();
+
+    // Get the current year
+    let currentYear = new Date().getFullYear();
+
+    if (year) {
+      currentYear = new Date().getFullYear() - year;
+    }
+
+    // Initialize an array of months
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    // Initialize an array of orders count
+    const ordersCount = new Array(12).fill(0);
+
+    // Loop through the months
+    for (let i = 0; i < months.length; i++) {
+      // Get the start and end date of the month
+      const startDate = new Date(`${currentYear}-${i + 1}-01`);
+      const endDate = new Date(startDate);
+      endDate.setMonth(endDate.getMonth() + 1);
+
+      // Query the Orders collection for the orders made in the month
+      const ordersInMonth = await Orders.find({
+        date: {
+          $gte: formatDateToCustom(startDate.toISOString()),
+          $lt: formatDateToCustom(endDate.toISOString()),
+        },
+      }).countDocuments();
+
+      // Update the orders count array
+      ordersCount[i] = ordersInMonth;
+    }
+
+    // Return the months and orders count arrays
+    return { months: months, ordersCount: ordersCount };
   } catch (error) {
     handleError(error);
   }

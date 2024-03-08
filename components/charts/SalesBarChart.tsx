@@ -13,6 +13,10 @@ import {
   ChartOptions,
 } from "chart.js";
 import Image from "next/image";
+import { getEachMonthOrderCount } from "@/libs/actions/order.actions";
+import { useEffect, useState } from "react";
+import Loader from "../ui/Loader";
+import ChartTimeFrame from "../builders/ChartTimeFrame";
 
 ChartJS.register(
   BarElement,
@@ -24,27 +28,33 @@ ChartJS.register(
 );
 
 const LineChart = () => {
+  const [months, setMonths] = useState<string[]>();
+  const [orderCount, setOrderCount] = useState<number[]>();
+  const [showTimeFrame, setShowTimeFrame] = useState(false);
+  const [selectedTimeFrame, setSelectedTimeFrame] = useState<string | null>(
+    "This year"
+  );
+  const [showLoader, setShowLoader] = useState(false);
+
+  useEffect(() => {
+    const getChartData = async () => {
+      setShowLoader(true);
+      const retrivedChartData = await getEachMonthOrderCount();
+      setMonths(retrivedChartData && retrivedChartData.months);
+      setOrderCount(retrivedChartData && retrivedChartData.ordersCount);
+      setShowLoader(false);
+    };
+    getChartData();
+  }, []);
+
   const isScreenWidth = window.innerWidth;
 
   const data: ChartData<"bar"> = {
-    labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+    labels: months && months,
     datasets: [
       {
-        label: "Revenue",
-        data: [24, 19, 13, 18, 28, 21, 34, 17, 36, 9, 18, 11],
+        label: "Orders",
+        data: orderCount!,
         backgroundColor: "#272829",
         borderRadius: 5,
         barPercentage: 0.8,
@@ -103,9 +113,8 @@ const LineChart = () => {
         },
 
         ticks: {
-          callback: (value: any) => value + "k",
-          stepSize: 5,
-
+          // callback: (value: any) => value + "k",
+          stepSize: 1,
           font: {
             family: "'Poppins', sans-serif",
           },
@@ -127,18 +136,40 @@ const LineChart = () => {
           <h2 className="font-medium text-xl">Sales Overview</h2>
           <p className="text-sm">Completed sales made overtime</p>
         </span>
-        <button type="button" className="flex items-center gap-1">
-          <Image src="/calendar.svg" width={17} height={17} alt="calendar" />
-          <p>This year</p>
-          <Image
-            src="/chevron-arrow-down.svg"
-            width={17}
-            height={17}
-            alt="arrow"
+        <div className="relative">
+          <button
+            type="button"
+            className="flex items-center gap-1"
+            onClick={() => setShowTimeFrame((prev) => !prev)}
+          >
+            <Image src="/calendar.svg" width={17} height={17} alt="calendar" />
+            <p className="text-sm font-normal capitalize">
+              {selectedTimeFrame && selectedTimeFrame}
+            </p>
+            <Image
+              src="/chevron-arrow-down.svg"
+              width={17}
+              height={17}
+              alt="arrow"
+            />
+          </button>
+          <ChartTimeFrame
+            setSelectedTimeFrame={setSelectedTimeFrame}
+            showTimeFrame={showTimeFrame}
+            setShowTimeFrame={setShowTimeFrame}
+            setMonths={setMonths}
+            setOrderCount={setOrderCount}
+            setShowLoader={setShowLoader}
           />
-        </button>
+        </div>
       </div>
-      <Bar data={data} options={options}></Bar>
+      {!showLoader ? (
+        <Bar data={data} options={options}></Bar>
+      ) : (
+        <section className="h-[70%] flex items-center justify-center">
+          <Loader className="loader" />
+        </section>
+      )}
     </section>
   );
 };

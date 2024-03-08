@@ -5,8 +5,19 @@ type TOrders = {
   lastname: string;
   email: string;
   amount: number;
-  products: string[];
+  products: {
+    _id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    photo: string;
+    model: string;
+    user: string;
+    category: string;
+  }[];
   date: string;
   status: string;
   channel: string;
+  userId: string;
+  userPhoto: string;
 };

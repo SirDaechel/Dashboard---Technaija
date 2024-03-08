@@ -11,17 +11,18 @@ import { useEffect, useState } from "react";
 export default function MetricCards() {
   const [totalRevenue, setTotalRevenue] = useState("");
   const [totalOrders, setTotalOrders] = useState("");
-  const [totalCustomers, setTotalCustomers] = useState("");
+  const [totalProfit, setTotaProfit] = useState("");
   const [revenuePercentage, setRevenuePercentage] = useState<number>();
   const [ordersPercentage, setOrdersPercentage] = useState<number>();
-  const [customersPercentage, setCustomersPercentage] = useState<number>();
+  const [profitPercentage, setProfitPercentage] = useState<number>();
 
   useEffect(() => {
     const initialMetricValues = async () => {
       // On initial render, get the total revenue and total orders for the last six months in parallel
-      const [ordersRevenue, ordersTotal] = await Promise.all([
+      const [ordersRevenue, ordersTotal, totalProfit] = await Promise.all([
         filterOrdersBySixMonths(),
         getLastSixMonthsOrders(),
+        filterOrdersBySixMonths(),
       ]);
 
       // On initial render, get the total revenue for the last six months
@@ -31,6 +32,12 @@ export default function MetricCards() {
       // On initial render, set the total order for the last six months
       if (ordersTotal) setTotalOrders(ordersTotal.totalOrders.toString());
       setOrdersPercentage(Number(ordersTotal?.percentageChange?.toFixed(2)));
+
+      // On initial render, set the total profit for the last six months
+      setTotaProfit(formatNumber(totalProfit?.lastSixMonthProfit, "₦"));
+      setProfitPercentage(
+        Number(totalProfit?.profitPercentageChange?.toFixed(2))
+      );
     };
 
     initialMetricValues();
@@ -43,7 +50,6 @@ export default function MetricCards() {
         title="Total Revenue"
         data={totalRevenue}
         icon={"/wallet.svg"}
-        percentage={revenuePercentage}
         icon2={
           revenuePercentage && revenuePercentage > 0
             ? "/up-arrow.svg"
@@ -60,7 +66,6 @@ export default function MetricCards() {
         title="Total Orders"
         data={totalOrders}
         icon={"/basket.svg"}
-        percentage={ordersPercentage}
         icon2={
           ordersPercentage && ordersPercentage > 0
             ? "/up-arrow.svg"
@@ -73,15 +78,20 @@ export default function MetricCards() {
         percentageSetter={setOrdersPercentage}
       />
       <MetricCard
-        type="customers"
-        title="Total Customers"
-        data={totalCustomers}
-        icon={"/customer2.svg"}
-        percentage={customersPercentage}
-        icon2="/up-arrow.svg"
-        setter={setTotalCustomers}
-        percentageValue={customersPercentage}
-        percentageSetter={setCustomersPercentage}
+        type="profit"
+        title="Total Profit"
+        data={totalProfit}
+        icon={"/cash.svg"}
+        icon2={
+          profitPercentage && profitPercentage > 0
+            ? "/up-arrow.svg"
+            : profitPercentage && profitPercentage <= 0
+            ? "/down-arrow.svg"
+            : null
+        }
+        setter={setTotaProfit}
+        percentageValue={profitPercentage}
+        percentageSetter={setProfitPercentage}
       />
     </section>
   );

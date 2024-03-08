@@ -61,7 +61,7 @@ const MetricTimeFrame = ({
       // If all time is selected
       if (e.currentTarget?.textContent === "all time") {
         const totalRevenue = await filterOrdersByAllTime();
-        setter(formatNumber(totalRevenue, "₦"));
+        setter(formatNumber(totalRevenue?.allTimeOrders, "₦"));
         percentageSetter(undefined);
       }
     }
@@ -94,6 +94,44 @@ const MetricTimeFrame = ({
       if (e.currentTarget?.textContent === "all time") {
         const totalOrders = await getAllOrdersCount();
         if (totalOrders) setter(totalOrders.toString());
+        percentageSetter(undefined);
+      }
+    }
+
+    if (type === "profit") {
+      setShowTimeFrame(false);
+
+      // If today is selected
+      if (e.currentTarget?.textContent === "today") {
+        const totalProfit = await filterOrdersByToday();
+        setter(formatNumber(totalProfit?.theTotalProfit, "₦"));
+        percentageSetter(
+          Number(totalProfit?.profitPercentageChange?.toFixed(2))
+        );
+      }
+
+      // If last month is selected
+      if (e.currentTarget?.textContent === "last month") {
+        const totalProfit = await filterOrdersByLastMonth();
+        setter(formatNumber(totalProfit?.lastMonthProfit, "₦"));
+        percentageSetter(
+          Number(totalProfit?.profitPercentageChange?.toFixed(2))
+        );
+      }
+
+      // If last six months is selected
+      if (e.currentTarget?.textContent === "6 months") {
+        const totalProfit = await filterOrdersBySixMonths();
+        setter(formatNumber(totalProfit?.lastSixMonthProfit, "₦"));
+        percentageSetter(
+          Number(totalProfit?.profitPercentageChange?.toFixed(2))
+        );
+      }
+
+      // If last all time is selected
+      if (e.currentTarget?.textContent === "all time") {
+        const totalRevenue = await filterOrdersByAllTime();
+        setter(formatNumber(totalRevenue?.allTimeProfit, "₦"));
         percentageSetter(undefined);
       }
     }

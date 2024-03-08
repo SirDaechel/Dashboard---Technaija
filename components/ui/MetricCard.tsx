@@ -7,7 +7,6 @@ type MetricCardProp = {
   icon?: string;
   title: string;
   data: string | number | undefined;
-  percentage?: number;
   icon2: string | null;
   setter: Dispatch<SetStateAction<string>>;
   percentageValue: number | undefined;
@@ -19,7 +18,6 @@ const MetricCard = ({
   icon,
   title,
   data,
-  percentage,
   icon2,
   setter,
   percentageValue,
@@ -75,14 +73,14 @@ const MetricCard = ({
               )}
               <p
                 className={`font-medium ${
-                  percentage && percentage > 0
+                  percentageValue && percentageValue > 0
                     ? "text-[#65B741]"
                     : "text-[#DF2E38FF]"
                 }`}
               >
-                {percentage && percentage > 0
-                  ? `+${percentage}%`
-                  : `${percentage}%`}
+                {percentageValue && percentageValue > 0
+                  ? `+${percentageValue}%`
+                  : `${percentageValue}%`}
               </p>
             </>
           )}
