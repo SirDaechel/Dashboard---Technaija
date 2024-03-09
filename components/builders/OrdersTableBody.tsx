@@ -5,7 +5,19 @@ type OrdersTableBodyProps = {
 };
 
 const OrdersTableBody = ({ fetchedOrders }: OrdersTableBodyProps) => {
-  console.log(fetchedOrders);
+  // console.log(
+  //   fetchedOrders.map((order) => {
+  //     return order.products.map((product) => {
+  //       return product.category; // Now the category is returned
+  //     });
+  //   })
+  // );
+
+  // fetchedOrders.map((order) => {
+  //   order.products.map((product) => {
+  //     console.log(product.name);
+  //   });
+  // });
 
   return (
     <>
@@ -23,8 +35,12 @@ const OrdersTableBody = ({ fetchedOrders }: OrdersTableBodyProps) => {
                 {order.firstname} {order.lastname}
               </p>
             </td>
-            <td>
-              <p className="text-sm"></p>
+            <td className="flex gap-2 flex-wrap">
+              {order.products.map((product) => (
+                <p key={product._id} className="w-max text-sm">
+                  {product.name} {product.model ? `- ${product.model}` : ""} |
+                </p>
+              ))}
             </td>
             <td>
               <p className="text-sm w-max">{convertDateFormat(order.date)}</p>

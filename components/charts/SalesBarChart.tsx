@@ -35,6 +35,7 @@ const LineChart = () => {
     "This year"
   );
   const [showLoader, setShowLoader] = useState(false);
+  const [isScreenWidth, setIsScreenWidth] = useState(0);
 
   useEffect(() => {
     const getChartData = async () => {
@@ -45,9 +46,8 @@ const LineChart = () => {
       setShowLoader(false);
     };
     getChartData();
+    setIsScreenWidth(window.innerWidth);
   }, []);
-
-  const isScreenWidth = window.innerWidth;
 
   const data: ChartData<"bar"> = {
     labels: months && months,

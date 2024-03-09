@@ -12,6 +12,9 @@ import {
   ChartData,
   ChartOptions,
 } from "chart.js";
+import { getOrderCategoryCount } from "@/libs/actions/order.actions";
+import { useEffect, useState } from "react";
+import Loader from "../ui/Loader";
 
 ChartJS.register(
   BarElement,
@@ -23,14 +26,29 @@ ChartJS.register(
 );
 
 const TopCatgeoryChart = () => {
-  const isScreenWidth = window.innerWidth;
+  const [category, setCategory] = useState<string[]>();
+  const [categoryCount, setCategoryCount] = useState<number[]>();
+  const [showLoader, setShowLoader] = useState(false);
+  const [isScreenWidth, setIsScreenWidth] = useState(0);
+
+  useEffect(() => {
+    const getChartData = async () => {
+      setShowLoader(true);
+      const retrivedChartData = await getOrderCategoryCount();
+      setCategory(retrivedChartData && retrivedChartData.category);
+      setCategoryCount(retrivedChartData && retrivedChartData.categoryCount);
+      setShowLoader(false);
+    };
+    getChartData();
+    setIsScreenWidth(window.innerWidth);
+  }, []);
 
   const data: ChartData<"bar"> = {
-    labels: ["iPhone", "Andriod", "Accessories"],
+    labels: category,
     datasets: [
       {
         label: "Revenue",
-        data: [9, 18, 11],
+        data: categoryCount!,
         backgroundColor: "#272829",
         borderRadius: 5,
         barPercentage: 0.8,
@@ -111,7 +129,13 @@ const TopCatgeoryChart = () => {
           <h2 className="font-medium text-xl">Top selling categories</h2>
         </span>
       </div>
-      <Bar data={data} options={options}></Bar>
+      {!showLoader ? (
+        <Bar data={data} options={options}></Bar>
+      ) : (
+        <section className="h-[70%] flex items-center justify-center">
+          <Loader className="loader" />
+        </section>
+      )}
     </section>
   );
 };

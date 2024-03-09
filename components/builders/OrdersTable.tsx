@@ -3,7 +3,7 @@ import OrdersTableBody from "./OrdersTableBody";
 import { getOrders } from "@/libs/actions/order.actions";
 
 const OrdersTable = async () => {
-  const fetchedOrders = await getOrders(6);
+  const fetchedOrders = await getOrders(5);
 
   return (
     <section className="w-full mt-4 border-[1px] border-gray-300 overflow-x-auto p-8">
@@ -11,9 +11,7 @@ const OrdersTable = async () => {
       <table className="w-full">
         <OrdersTableHead />
         {fetchedOrders && fetchedOrders.orders.length > 0 && (
-          <OrdersTableBody
-            fetchedOrders={fetchedOrders && fetchedOrders.orders}
-          />
+          <OrdersTableBody fetchedOrders={fetchedOrders.orders} />
         )}
       </table>
       {!fetchedOrders ||

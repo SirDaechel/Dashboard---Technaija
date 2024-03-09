@@ -106,14 +106,14 @@ export const filterOrdersByToday = async () => {
     // Calculate total profit for today (20% of the total revenue)
     const todayProfit =
       todayOrders.length > 0
-        ? todayOrders[0].totalAmount - todayOrders[0].totalAmount * 0.2
+        ? todayOrders[0].totalAmount - todayOrders[0].totalAmount * 0.6
         : 0;
 
     // Calculate total profit for today (20% of the total revenue)
     const previousDayProfit =
       previousDayOrders.length > 0
         ? previousDayOrders[0].totalAmount -
-          previousDayOrders[0].totalAmount * 0.2
+          previousDayOrders[0].totalAmount * 0.6
         : 0;
 
     // Calculate the profit percentage change from previous day total and current day total
@@ -208,14 +208,14 @@ export const filterOrdersByLastMonth = async () => {
     const lastMonthProfit =
       lastMonthsOrders.length > 0
         ? lastMonthsOrders[0].totalAmount -
-          lastMonthsOrders[0].totalAmount * 0.2
+          lastMonthsOrders[0].totalAmount * 0.6
         : 0;
 
     // Calculate total profit for before last month (20% of the total revenue)
     const beforeLastMonthProfit =
       beforeLastMonthOrders.length > 0
         ? beforeLastMonthOrders[0].totalAmount -
-          beforeLastMonthOrders[0].totalAmount * 0.2
+          beforeLastMonthOrders[0].totalAmount * 0.6
         : 0;
 
     // Calculate the profit percentage change from last month total and before last month total
@@ -302,14 +302,14 @@ export const filterOrdersBySixMonths = async () => {
     const lastSixMonthProfit =
       lastSixMonthOrders.length > 0
         ? lastSixMonthOrders[0].totalAmount -
-          lastSixMonthOrders[0].totalAmount * 0.2
+          lastSixMonthOrders[0].totalAmount * 0.6
         : 0;
 
     // Calculate total profit for before last six months (20% of the total revenue)
     const beforeLastSixMonthProfit =
       beforeLastSixMonthOrders.length > 0
         ? beforeLastSixMonthOrders[0].totalAmount -
-          beforeLastSixMonthOrders[0].totalAmount * 0.2
+          beforeLastSixMonthOrders[0].totalAmount * 0.6
         : 0;
 
     // Calculate the profit percentage change from last month total and before last month total
@@ -349,7 +349,7 @@ export const filterOrdersByAllTime = async () => {
     // Calculate total all time profit (20% of the total revenue)
     const allTimeProfit =
       orders.length > 0
-        ? orders[0].totalAmount - orders[0].totalAmount * 0.2
+        ? orders[0].totalAmount - orders[0].totalAmount * 0.6
         : 0;
 
     return {
@@ -539,6 +539,68 @@ export const getEachMonthOrderCount = async (year?: number) => {
 
     // Return the months and orders count arrays
     return { months: months, ordersCount: ordersCount };
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getOrderCategoryCount = async () => {
+  try {
+    await connectToDatabase();
+
+    const category = await Orders.aggregate([
+      { $unwind: "$products" },
+      {
+        $group: {
+          _id: "$products.category",
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { count: -1 } },
+    ]);
+
+    return {
+      category: category.map((item) => item._id),
+      categoryCount: category.map((item) => item.count),
+    };
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Get top customers (customers with most orders)
+export const getTopCustomers = async () => {
+  try {
+    await connectToDatabase();
+
+    const topCustomers = await Orders.aggregate([
+      {
+        $group: {
+          _id: "$userId", // Group by the user ID
+          ordersCount: { $sum: 1 }, // Count the number of orders per user
+          firstName: { $first: "$firstname" }, // Get the first name
+          lastName: { $first: "$lastname" }, // Get the last name
+          email: { $first: "$email" }, // Get the email
+          userPhoto: { $first: "$userPhoto" }, // Get the user photo
+        },
+      },
+      {
+        $sort: { ordersCount: -1 }, // Sort by ordersCount in descending order
+      },
+      {
+        $project: {
+          _id: 0, // Exclude the _id field from the results
+          userId: "$_id", // Include the userId in the results
+          ordersCount: 1, // Include the ordersCount
+          firstName: 1, // Include the firstName
+          lastName: 1, // Include the lastName
+          email: 1, // Include the email
+          userPhoto: 1, // Include the userPhoto
+        },
+      },
+    ]);
+
+    return topCustomers;
   } catch (error) {
     handleError(error);
   }

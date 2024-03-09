@@ -41,21 +41,21 @@ const MetricTimeFrame = ({
       if (e.currentTarget?.textContent === "today") {
         const totalRevenue = await filterOrdersByToday();
         setter(formatNumber(totalRevenue?.theTotalRevenue, "₦"));
-        percentageSetter(totalRevenue?.percentageChange);
+        percentageSetter(Number(totalRevenue?.percentageChange?.toFixed(2)));
       }
 
       // If last month is selected
       if (e.currentTarget?.textContent === "last month") {
         const totalRevenue = await filterOrdersByLastMonth();
         setter(formatNumber(totalRevenue?.theTotalRevenue, "₦"));
-        percentageSetter(totalRevenue?.percentageChange);
+        percentageSetter(Number(totalRevenue?.percentageChange?.toFixed(2)));
       }
 
       // If 6 months is selected
       if (e.currentTarget?.textContent === "6 months") {
         const totalRevenue = await filterOrdersBySixMonths();
         setter(formatNumber(totalRevenue?.theTotalRevenue, "₦"));
-        percentageSetter(totalRevenue?.percentageChange);
+        percentageSetter(Number(totalRevenue?.percentageChange?.toFixed(2)));
       }
 
       // If all time is selected

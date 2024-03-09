@@ -8,7 +8,6 @@ const OrderSchema = new Schema({
   amount: { type: Number, required: true },
   products: [
     {
-      _id: { type: String, required: true },
       name: { type: String, required: true },
       price: { type: Number, required: true },
       quantity: { type: Number, required: true },
@@ -21,7 +20,7 @@ const OrderSchema = new Schema({
   date: { type: String, required: true },
   status: { type: String, required: true },
   channel: { type: String, required: true },
-  userId: { type: String, required: true, unique: true },
+  userId: { type: String, required: true },
   userPhoto: { type: String, required: true },
 });
 

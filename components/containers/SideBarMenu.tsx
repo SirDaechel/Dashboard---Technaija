@@ -1,5 +1,6 @@
 import Image from "next/image";
 import SideBarNav from "../builders/SideBarNav";
+import Link from "next/link";
 
 const SideBarMenu = () => {
   return (
@@ -11,7 +12,17 @@ const SideBarMenu = () => {
         height={75}
         alt="logo"
       />
-      <SideBarNav />
+      <section className="flex flex-col h-full justify-between">
+        <SideBarNav />
+        <Link
+          href="https://technaija.vercel.app/"
+          target="_blank"
+          className="w-full flex gap-2 py-2 px-3 bg-white text-[#272829] text-center text-sm font-medium rounded-md"
+        >
+          <p>Visit Technaija</p>
+          <Image src="/link.svg" width={15} height={15} alt="go-to-technaija" />
+        </Link>
+      </section>
     </aside>
   );
 };
