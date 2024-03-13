@@ -3,8 +3,11 @@ import TopCustomers from "@/components/builders/TopCustomers";
 import SalesBarChart from "@/components/charts/SalesBarChart";
 import TopCatgeoryChart from "@/components/charts/TopCatgeoryChart";
 import MetricCards from "@/components/containers/MetricCards";
+import { getOrders } from "@/libs/actions/order.actions";
 
-export default function Home() {
+export default async function Home() {
+  const fetchedOrders = await getOrders({ limit: 5 });
+
   return (
     <section className="p-6">
       <div className="w-full grid grid-cols-3 gap-4">
@@ -15,7 +18,7 @@ export default function Home() {
           <TopCustomers />
         </div>
       </div>
-      <OrdersTable />
+      <OrdersTable location="home" orders={fetchedOrders?.orders} />
     </section>
   );
 }

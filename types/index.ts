@@ -21,3 +21,9 @@ type TOrders = {
   userId: string;
   userPhoto: string;
 };
+
+type getOrdersParams = {
+  limit: number;
+  page?: number;
+  status?: string;
+};

@@ -5,28 +5,69 @@ import { formatDateToCustom, handleError } from "../utils";
 import Orders from "../database/models/order.model";
 
 // Get Orders
-export const getOrders = async (limit: number, page?: number) => {
+export const getOrders = async ({ limit, page, status }: getOrdersParams) => {
   try {
     await connectToDatabase();
 
     let ordersQuery;
 
-    if (page !== undefined) {
-      const modifiedLimit = page * limit;
-      ordersQuery = Orders.find({}).limit(modifiedLimit);
-    } else {
-      ordersQuery = Orders.find({}).limit(limit);
+    // Aggregation pipeline to get all counts in one go
+    const [counts] = await Orders.aggregate([
+      {
+        $group: {
+          _id: null,
+          total: { $sum: 1 },
+          success: {
+            $sum: { $cond: [{ $eq: ["$status", "success"] }, 1, 0] },
+          },
+          pending: {
+            $sum: { $cond: [{ $eq: ["$status", "pending"] }, 1, 0] },
+          },
+          failed: {
+            $sum: { $cond: [{ $eq: ["$status", "failed"] }, 1, 0] },
+          },
+        },
+      },
+    ]);
+
+    const { total, success, pending, failed } = counts;
+
+    // Get the total number of the current order query (this is necessary because the query could change if status is defined)
+    const totalPages = Math.ceil(
+      status === "success"
+        ? success / limit
+        : status === "pending"
+        ? pending / limit
+        : status === "failed"
+        ? failed / limit
+        : total / limit
+    );
+
+    const pageNumbers: number[] = [];
+
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i);
+    }
+
+    // Construct the query based on status and page
+    let query = { ...(status && { status }) };
+
+    ordersQuery = Orders.find(query).limit(limit).sort({ date: -1 });
+
+    // Apply pagination if page is provided
+    if (page) {
+      ordersQuery = ordersQuery.skip((page - 1) * limit);
     }
 
     const ordersData = await ordersQuery;
-    const ordersCount = await Orders.countDocuments({});
-
-    const newLimit = page && page * limit;
 
     return {
       orders: JSON.parse(JSON.stringify(ordersData)),
-      totalPages: Math.ceil(ordersCount / limit),
-      newLimit,
+      pageNumbers: pageNumbers,
+      ordersCount: total,
+      ordersSuccessCount: success,
+      ordersPendingCount: pending,
+      ordersFailedCount: failed,
     };
   } catch (error) {
     handleError(error);
