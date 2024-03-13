@@ -27,3 +27,7 @@ type getOrdersParams = {
   page?: number;
   status?: string;
 };
+
+type getCustomersParams = {
+  limit: number;
+};

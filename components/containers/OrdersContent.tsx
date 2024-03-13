@@ -31,7 +31,7 @@ const OrdersContent = ({ location }: OrdersContentProp) => {
   const perPage = 10;
 
   useEffect(() => {
-    const fetchedOrders = async () => {
+    const fetchOrders = async () => {
       const fetchedOrders = await getOrders({
         limit: perPage,
         status: currentStatus ? currentStatus : undefined,
@@ -45,7 +45,7 @@ const OrdersContent = ({ location }: OrdersContentProp) => {
       setPageNumbers(fetchedOrders?.pageNumbers);
       setShowLoader(false);
     };
-    fetchedOrders();
+    fetchOrders();
   }, [currentStatus, currentPage]);
 
   return (

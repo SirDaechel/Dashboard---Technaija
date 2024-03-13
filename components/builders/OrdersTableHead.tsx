@@ -6,7 +6,7 @@ import { sortArray } from "@/libs/utils";
 
 type OrdersTableHeadProps = {
   orders: TOrders[] | undefined;
-  setOrders: Dispatch<SetStateAction<TOrders[] | undefined>>;
+  setOrders?: Dispatch<SetStateAction<TOrders[] | undefined>>;
 };
 
 const OrdersTableHead = ({ orders, setOrders }: OrdersTableHeadProps) => {
@@ -15,25 +15,25 @@ const OrdersTableHead = ({ orders, setOrders }: OrdersTableHeadProps) => {
 
   const filterDateByAscendingOrder = () => {
     const sortedOrders = sortArray(orders ? orders : [], "date", "asc");
-    setOrders(sortedOrders);
+    setOrders && setOrders(sortedOrders);
     setOpenDateSorting(false);
   };
 
   const filterDateByDescendingOrder = () => {
     const sortedOrders = sortArray(orders ? orders : [], "date", "desc");
-    setOrders(sortedOrders);
+    setOrders && setOrders(sortedOrders);
     setOpenDateSorting(false);
   };
 
   const filterAmountByAscendingOrder = () => {
     const sortedOrders = sortArray(orders ? orders : [], "amount", "asc");
-    setOrders(sortedOrders);
+    setOrders && setOrders(sortedOrders);
     setOpenAmountSorting(false);
   };
 
   const filterAmountByDescendingOrder = () => {
     const sortedOrders = sortArray(orders ? orders : [], "amount", "desc");
-    setOrders(sortedOrders);
+    setOrders && setOrders(sortedOrders);
     setOpenAmountSorting(false);
   };
 

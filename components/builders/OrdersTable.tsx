@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction } from "react";
 type OrdersTableProp = {
   location: string;
   orders: TOrders[] | undefined;
-  setOrders: Dispatch<SetStateAction<TOrders[] | undefined>>;
+  setOrders?: Dispatch<SetStateAction<TOrders[] | undefined>>;
   showLoader?: boolean;
 };
 
@@ -24,7 +24,10 @@ const OrdersTable = ({
       {!showLoader ? (
         <>
           <table className="w-full">
-            <OrdersTableHead orders={orders} setOrders={setOrders} />
+            <OrdersTableHead
+              orders={orders}
+              setOrders={setOrders && setOrders}
+            />
             {orders && orders.length > 0 && <OrdersTableBody orders={orders} />}
           </table>
           {!orders ? (
