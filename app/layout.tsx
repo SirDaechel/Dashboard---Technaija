@@ -3,6 +3,7 @@ import { Inter, Jost } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ReduxProvider from "@/libs/redux-state/ReduxProvider";
+import Overlay from "@/components/layout/Overlay";
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -27,7 +28,10 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={jost.className}>
-          <ReduxProvider>{children}</ReduxProvider>
+          <ReduxProvider>
+            <Overlay />
+            {children}
+          </ReduxProvider>
         </body>
       </html>
     </ClerkProvider>

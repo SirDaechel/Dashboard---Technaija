@@ -32,13 +32,19 @@ const Pagination = ({
       (currentPage - 1 > 0 ? currentPage - 1 : 1).toString()
     );
     // Call the function that creates a URL string with the data from UrlSearchParams
-    const statusURL = createURL(pathname, UrlSearchParams);
+    const pageURL = createURL(pathname, UrlSearchParams);
     // Push the created URL string to the URL
-    router.push(`${statusURL}`);
+    router.push(`${pageURL}`);
   };
 
   const nextPage = () => {
-    UrlSearchParams.set(urlKey, (currentPage + 1).toString());
+    UrlSearchParams.set(
+      urlKey,
+      (currentPage !== pageNumbers?.length
+        ? currentPage + 1
+        : currentPage
+      ).toString()
+    );
     // Call the function that creates a URL string with the data from UrlSearchParams
     const statusURL = createURL(pathname, UrlSearchParams);
     // Push the created URL string to the URL
