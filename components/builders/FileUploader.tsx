@@ -55,7 +55,7 @@ export default function FileUploader({
             type="button"
             className="bg-[#272829] text-white py-2 px-3 rounded"
           >
-            Select from computer
+            Select from device
           </button>
         </div>
       ) : (
