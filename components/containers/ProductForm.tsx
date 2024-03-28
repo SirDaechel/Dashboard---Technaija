@@ -33,7 +33,7 @@ const ProductForm = ({ type }: ProductFormProps) => {
 
   const pathname = usePathname();
 
-  const module = {
+  const quillModule = {
     toolbar: toolbarOptions,
   };
 
@@ -97,7 +97,7 @@ const ProductForm = ({ type }: ProductFormProps) => {
                     <ReactQuill
                       {...field}
                       className="h-[15rem] mb-12"
-                      modules={module}
+                      modules={quillModule}
                       theme="snow"
                     />
                   )}
@@ -151,7 +151,7 @@ const ProductForm = ({ type }: ProductFormProps) => {
                       <ReactQuill
                         {...field}
                         className="h-[15rem] mb-12"
-                        modules={module}
+                        modules={quillModule}
                         theme="snow"
                       />
                     )}
