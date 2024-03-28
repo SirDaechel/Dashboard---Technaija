@@ -197,7 +197,9 @@ const ProductForm = ({ type }: ProductFormProps) => {
           />
           <button
             type="submit"
-            className="mt-6 bg-[#272829] p-3 text-white disabled:bg-gray-100 disabled:text-[#272829] duration-200 transition disabled:duration-200 disabled:transition disabled:cursor-not-allowed"
+            className={`mt-6 bg-[#272829] p-3 text-white disabled:bg-gray-100 disabled:text-[#272829] duration-200 transition disabled:duration-200 disabled:transition disabled:cursor-not-allowed ${
+              isSubmitting && "bg-gray-100 text-[#272829]"
+            }`}
             disabled={
               !selectedCategory.length || selectedCategory === "Select category"
                 ? true
