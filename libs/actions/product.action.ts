@@ -37,6 +37,18 @@ export const getProducts = async ({ limit, page }: getProductParams) => {
   }
 };
 
+export const createProduct = async ({ product, path }: CreateProductParams) => {
+  try {
+    await connectToDatabase();
+
+    await Products.create(product);
+
+    revalidatePath(path);
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 export const deleteProduct = async ({
   products,
   path,

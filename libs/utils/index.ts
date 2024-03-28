@@ -114,3 +114,5 @@ export const sortArray = (array: any[], property: string, order: string) => {
   });
   return sortedArray;
 };
+
+export const convertFileToUrl = (file: File) => URL.createObjectURL(file);

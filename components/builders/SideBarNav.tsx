@@ -30,7 +30,9 @@ const SideBarNav = () => {
       <Link href="/products">
         <Button
           classname={`w-full flex items-center gap-3 ${
-            pathname === "/products" && "bg-[#45474B]"
+            (pathname === "/products" && "bg-[#45474B]") ||
+            (pathname === "/products/create-product" && "bg-[#45474B]") ||
+            (pathname === "/products/edit-product" && "bg-[#45474B]")
           }`}
           src="/product.svg"
           text="Products"

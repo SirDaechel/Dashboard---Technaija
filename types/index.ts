@@ -62,6 +62,7 @@ type TProduct = {
   additional_information?: {
     model?: {
       id: string;
+      _id: string;
       text: string;
     }[];
   };
@@ -72,4 +73,38 @@ type TProduct = {
     image: string;
   }[];
   featured_image: string;
+};
+
+type NewProduct = {
+  name: string;
+  price: number;
+  sales_price?: number;
+  short_description?: string;
+  description: string;
+  reviews?: [];
+  additional_information?: {
+    model?: {
+      text: string;
+    }[];
+  };
+  original_category: string;
+  gallery?: {
+    image: string;
+  }[];
+  featured_image: string;
+};
+
+type TCategory = {
+  _id: string;
+  category: string;
+};
+
+type NewCategoryParams = {
+  category: string;
+  path: string;
+};
+
+type CreateProductParams = {
+  product: NewProduct;
+  path: string;
 };

@@ -16,11 +16,9 @@ const ProductSchema = new Schema({
       saveDetails: { type: Boolean, default: false },
     },
   ],
-  sku: { type: String },
   additional_information: {
     model: [
       {
-        id: String,
         text: String,
       },
     ],

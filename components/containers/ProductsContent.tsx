@@ -146,7 +146,7 @@ const ProductsContent = () => {
           <LinkButton
             text="Create Product"
             classname="min-w-max bg-[#272829] text-white py-2 px-3"
-            link="/create-product"
+            link="/products/create-product"
           />
         </div>
       </div>
