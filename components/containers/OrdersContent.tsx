@@ -6,6 +6,7 @@ import OrdersTabs from "../builders/OrdersTabs";
 import { getOrders } from "@/libs/actions/order.actions";
 import { useEffect, useState } from "react";
 import Pagination from "../builders/Pagination";
+import PerPageDropdown from "../ui/PerPageDropdown";
 
 type OrdersContentProp = {
   location: string;
@@ -19,6 +20,7 @@ const OrdersContent = ({ location }: OrdersContentProp) => {
   const [ordersFailedCount, setOrdersFailedCount] = useState<number>();
   const [pageNumbers, setPageNumbers] = useState<number[]>();
   const [showLoader, setShowLoader] = useState(true);
+  const [perPage, setPerPage] = useState(5);
 
   const searchParams = useSearchParams();
 
@@ -27,8 +29,6 @@ const OrdersContent = ({ location }: OrdersContentProp) => {
   const currentStatus = UrlSearchParams.get("status");
 
   const currentPage = parseInt(UrlSearchParams.get("page") || "1", 10);
-
-  const perPage = 10;
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -46,17 +46,20 @@ const OrdersContent = ({ location }: OrdersContentProp) => {
       setShowLoader(false);
     };
     fetchOrders();
-  }, [currentStatus, currentPage]);
+  }, [currentStatus, currentPage, perPage]);
 
   return (
     <section>
-      <OrdersTabs
-        ordersCount={ordersCount ? ordersCount : 0}
-        ordersSuccessCount={ordersSuccessCount ? ordersSuccessCount : 0}
-        ordersPendingCount={ordersPendingCount ? ordersPendingCount : 0}
-        ordersFailedCount={ordersFailedCount ? ordersFailedCount : 0}
-        UrlSearchParams={UrlSearchParams}
-      />
+      <div className="flex items-center justify-between gap-2">
+        <OrdersTabs
+          ordersCount={ordersCount ? ordersCount : 0}
+          ordersSuccessCount={ordersSuccessCount ? ordersSuccessCount : 0}
+          ordersPendingCount={ordersPendingCount ? ordersPendingCount : 0}
+          ordersFailedCount={ordersFailedCount ? ordersFailedCount : 0}
+          UrlSearchParams={UrlSearchParams}
+        />
+        <PerPageDropdown perPage={perPage} setPerPage={setPerPage} />
+      </div>
       <OrdersTable
         location={location}
         orders={orders}

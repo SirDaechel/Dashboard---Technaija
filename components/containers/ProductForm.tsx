@@ -14,7 +14,8 @@ import { TProductSchema } from "@/libs/zod";
 import { productSchema } from "@/libs/zod";
 import FileUploader from "../builders/FileUploader";
 import { createProduct } from "@/libs/actions/product.action";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useUploadThing } from "@/libs/uploadthing";
 
 type ProductFormProps = {
   type: string;
@@ -31,7 +32,7 @@ const ProductForm = ({ type }: ProductFormProps) => {
   const [gallery, setGallery] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("Select category");
 
-  const pathname = usePathname();
+  const router = useRouter();
 
   const quillModule = {
     toolbar: toolbarOptions,
@@ -49,21 +50,46 @@ const ProductForm = ({ type }: ProductFormProps) => {
     reset,
   } = useForm<TProductSchema>({ resolver: zodResolver(productSchema) });
 
+  const { startUpload } = useUploadThing("imageUploader");
+
   const onSubmit = async (data: TProductSchema) => {
-    const newProduct = {
-      ...data,
-      additional_information: { model },
-      gallery: gallery.map((img) => ({
-        image: img,
-      })),
-      original_category: selectedCategory,
-      reviews: undefined,
-    };
+    let uploadedImageUrl = data.featured_image;
 
-    await createProduct({ product: newProduct, path: pathname });
+    if (files.length > 0) {
+      const uploadedImages = await startUpload(files);
 
-    console.log(newProduct);
-    // reset();
+      if (!uploadedImages) {
+        return;
+      }
+
+      uploadedImageUrl = uploadedImages[0].url;
+    }
+
+    if (type === "create") {
+      try {
+        const newProduct = await createProduct({
+          product: {
+            ...data,
+            featured_image: uploadedImageUrl,
+            additional_information: { model },
+            gallery: gallery.map((img) => ({
+              image: img,
+            })),
+            original_category: selectedCategory,
+            reviews: [],
+          },
+          path: "/products",
+        });
+
+        if (newProduct) {
+          console.log(newProduct);
+          // reset();
+          // router.push("/products");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -203,7 +229,9 @@ const ProductForm = ({ type }: ProductFormProps) => {
                 : "bg-[#272829] text-white"
             }`}
             disabled={
-              !selectedCategory.length || selectedCategory === "Select category"
+              !selectedCategory.length ||
+              selectedCategory === "Select category" ||
+              isSubmitting
                 ? true
                 : false
             }

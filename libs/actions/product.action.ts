@@ -41,9 +41,11 @@ export const createProduct = async ({ product, path }: CreateProductParams) => {
   try {
     await connectToDatabase();
 
-    await Products.create(product);
+    const newProduct = await Products.create(product);
 
     revalidatePath(path);
+
+    return JSON.parse(JSON.stringify(newProduct));
   } catch (error) {
     handleError(error);
   }

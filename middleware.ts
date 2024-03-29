@@ -10,6 +10,7 @@ export default authMiddleware({
     "/products",
     "/customers",
     "/products/create-product",
+    "/api/uploadthing",
   ],
   ignoredRoutes: [],
 });

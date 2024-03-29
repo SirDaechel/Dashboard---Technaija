@@ -2,7 +2,10 @@ import { z } from "zod";
 
 // CREATE / EDIT PRODUCT SCHEMA
 export const productSchema = z.object({
-  name: z.string().min(3, "Use 3 characters or more"),
+  name: z
+    .string()
+    .min(3, "Use 3 characters or more")
+    .max(40, "Description must be less than 40 characters"),
   price: z.preprocess((val) => {
     if (typeof val === "string") {
       return parseInt(val, 10);
@@ -21,7 +24,10 @@ export const productSchema = z.object({
     return undefined;
   }, z.number().optional()),
   short_description: z.string().optional(),
-  description: z.string().min(3, "Use 3 characters or more"),
+  description: z
+    .string()
+    .min(3, "Use 3 characters or more")
+    .max(400, "Description must be less than 400 characters"),
   featured_image: z.string(),
 });
 
