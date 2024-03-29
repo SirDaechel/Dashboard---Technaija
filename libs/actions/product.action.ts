@@ -31,7 +31,10 @@ export const getProducts = async ({ limit, page }: getProductParams) => {
 
     const productsData = await productQuery;
 
-    return { products: JSON.parse(JSON.stringify(productsData)), pageNumbers };
+    return {
+      products: JSON.parse(JSON.stringify(productsData.reverse())),
+      pageNumbers,
+    };
   } catch (error) {
     handleError(error);
   }

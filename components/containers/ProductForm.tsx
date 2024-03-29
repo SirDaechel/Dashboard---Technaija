@@ -82,9 +82,8 @@ const ProductForm = ({ type }: ProductFormProps) => {
         });
 
         if (newProduct) {
-          console.log(newProduct);
-          // reset();
-          // router.push("/products");
+          router.push("/products");
+          reset();
         }
       } catch (error) {
         console.log(error);
