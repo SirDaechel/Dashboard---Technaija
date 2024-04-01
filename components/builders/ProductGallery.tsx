@@ -2,8 +2,16 @@ import Image from "next/image";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 
 type ProductGalleryProps = {
-  gallery: string[];
-  setGallery: Dispatch<SetStateAction<string[]>>;
+  gallery: {
+    image: string;
+  }[];
+  setGallery: Dispatch<
+    SetStateAction<
+      {
+        image: string;
+      }[]
+    >
+  >;
 };
 
 const ProductGallery = ({ gallery, setGallery }: ProductGalleryProps) => {
@@ -17,7 +25,7 @@ const ProductGallery = ({ gallery, setGallery }: ProductGalleryProps) => {
     reader.onloadend = () => {
       // Ensure reader.result is a string before adding to the gallery
       if (typeof reader.result === "string") {
-        setGallery([...gallery, reader.result]);
+        setGallery([...gallery, { image: reader.result }]);
       }
     };
     if (file) reader.readAsDataURL(file);
@@ -41,7 +49,7 @@ const ProductGallery = ({ gallery, setGallery }: ProductGalleryProps) => {
           <div key={index} className="relative group w-max">
             <Image
               className="cursor-pointer duration-200 group-hover:opacity-20 group-hover:transition group-hover:duration-200"
-              src={img}
+              src={img.image}
               width={80}
               height={80}
               quality={100}

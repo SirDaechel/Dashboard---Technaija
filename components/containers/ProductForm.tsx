@@ -13,34 +13,62 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TProductSchema } from "@/libs/zod";
 import { productSchema } from "@/libs/zod";
 import FileUploader from "../builders/FileUploader";
-import { createProduct } from "@/libs/actions/product.action";
+import { createProduct, updateProduct } from "@/libs/actions/product.action";
 import { useRouter } from "next/navigation";
 import { useUploadThing } from "@/libs/uploadthing";
+import { productDefaultValues } from "@/constants";
 
 type ProductFormProps = {
   type: string;
+  product?: TProduct;
 };
 
-const ProductForm = ({ type }: ProductFormProps) => {
+const ProductForm = ({ type, product }: ProductFormProps) => {
   const [model, setModel] = useState<
     {
       text: string;
     }[]
   >([]);
-  const [modelsError, setModelsError] = useState<string>("");
+
   const [files, setFiles] = useState<File[]>([]);
-  const [gallery, setGallery] = useState<string[]>([]);
+  const [gallery, setGallery] = useState<
+    {
+      image: string;
+    }[]
+  >([]);
   const [selectedCategory, setSelectedCategory] = useState("Select category");
 
   const router = useRouter();
 
+  // Set initial form values based on the operation type.
+  // If editing an existing product, use its details; otherwise, use default values.
+  const initialValues =
+    product && type === "edit"
+      ? {
+          ...product,
+        }
+      : productDefaultValues;
+
+  // Effect hook to initialize form state when editing a product.
+  useEffect(() => {
+    // Check if a product is being edited.
+    if (product && type === "edit") {
+      // Set the model state. Use the product's model if available, or default to an empty array.
+      setModel(
+        product.additional_information?.model
+          ? product.additional_information?.model
+          : []
+      );
+      // Set the selected category state to the product's original category.
+      setSelectedCategory(product.original_category);
+      // Set the gallery state. Use the product's gallery if available, or default to an empty array.
+      setGallery(product.gallery ? product.gallery : []);
+    }
+  }, []);
+
   const quillModule = {
     toolbar: toolbarOptions,
   };
-
-  useEffect(() => {
-    console.log(model);
-  }, [model]);
 
   const {
     control,
@@ -48,32 +76,41 @@ const ProductForm = ({ type }: ProductFormProps) => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<TProductSchema>({ resolver: zodResolver(productSchema) });
+  } = useForm<TProductSchema>({
+    resolver: zodResolver(productSchema),
+    defaultValues: initialValues,
+  });
 
   const { startUpload } = useUploadThing("imageUploader");
 
   const onSubmit = async (data: TProductSchema) => {
+    // Initialize the URL for the featured image.
     let uploadedImageUrl = data.featured_image;
 
+    // If there are files to upload, start the upload process.
     if (files.length > 0) {
       const uploadedImages = await startUpload(files);
 
+      // If the upload fails, exit the function early.
       if (!uploadedImages) {
         return;
       }
 
+      // Update the featured image URL with the first uploaded image's URL.
       uploadedImageUrl = uploadedImages[0].url;
     }
 
+    // If creating a new product, send a request to the product creation endpoint.
     if (type === "create") {
       try {
+        // Construct the new product object and send the create request.
         const newProduct = await createProduct({
           product: {
             ...data,
             featured_image: uploadedImageUrl,
             additional_information: { model },
             gallery: gallery.map((img) => ({
-              image: img,
+              image: img.image,
             })),
             original_category: selectedCategory,
             reviews: [],
@@ -81,7 +118,43 @@ const ProductForm = ({ type }: ProductFormProps) => {
           path: "/products",
         });
 
+        // If the product is successfully created, navigate to the products page and reset the form.
         if (newProduct) {
+          router.push("/products");
+          reset();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    // If editing an existing product, send a request to the product update endpoint.
+    if (type === "edit") {
+      // If the product to edit doesn't exist, navigate back.
+      if (!product) {
+        router.back();
+        return;
+      }
+
+      try {
+        // Construct the updated product object and send the update request.
+        const updatedProduct = await updateProduct({
+          productId: product._id,
+          product: {
+            ...data,
+            featured_image: uploadedImageUrl,
+            additional_information: { model },
+            gallery: gallery.map((img) => ({
+              image: img.image,
+            })),
+            original_category: selectedCategory,
+            reviews: [],
+          },
+          path: "/products",
+        });
+
+        // If the product is successfully updated, navigate to the products page and reset the form.
+        if (updatedProduct) {
           router.push("/products");
           reset();
         }
@@ -127,6 +200,9 @@ const ProductForm = ({ type }: ProductFormProps) => {
                     />
                   )}
                 />
+                {errors.short_description && (
+                  <p className="text-red-500">{`${errors.short_description.message}`}</p>
+                )}
               </span>
             </div>
           </div>
@@ -181,14 +257,11 @@ const ProductForm = ({ type }: ProductFormProps) => {
                       />
                     )}
                   />
+                  {errors.description && (
+                    <p className="text-red-500">{`${errors.description.message}`}</p>
+                  )}
                 </span>
-                <ModelInput
-                  label="Models"
-                  data={model}
-                  setData={setModel}
-                  error={modelsError}
-                  setError={setModelsError}
-                />
+                <ModelInput label="Models" data={model} setData={setModel} />
               </div>
             </div>
           </div>

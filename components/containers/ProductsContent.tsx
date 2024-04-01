@@ -161,6 +161,7 @@ const ProductsContent = () => {
         pageNumbers={pageNumbers}
         currentPage={currentPage}
         setSingleProductToBeDeleted={setSingleProductToBeDeleted}
+        UrlSearchParams={UrlSearchParams}
       />
       {/* {products && products?.length > 0 && ( */}
       <Pagination

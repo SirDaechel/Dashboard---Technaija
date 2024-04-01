@@ -18,6 +18,7 @@ type ProductTableProps = {
   pageNumbers: number[] | undefined;
   currentPage: number;
   setSingleProductToBeDeleted: Dispatch<SetStateAction<string>>;
+  UrlSearchParams: URLSearchParams;
 };
 
 const ProductTable = ({
@@ -27,10 +28,8 @@ const ProductTable = ({
   setProducts,
   showLoader,
   setShowDeleteModal,
-  setShowLoader2,
-  pageNumbers,
-  currentPage,
   setSingleProductToBeDeleted,
+  UrlSearchParams,
 }: ProductTableProps) => {
   // Function to handle individual checkbox toggle
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,6 +89,7 @@ const ProductTable = ({
                 handleCheckboxChange={handleCheckboxChange}
                 setShowDeleteModal={setShowDeleteModal}
                 setSingleProductToBeDeleted={setSingleProductToBeDeleted}
+                UrlSearchParams={UrlSearchParams}
               />
             )}
           </table>

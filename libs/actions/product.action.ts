@@ -74,3 +74,38 @@ export const deleteProduct = async ({
     handleError(error);
   }
 };
+
+export const getProductById = async (productId: string) => {
+  try {
+    await connectToDatabase();
+
+    const product = await Products.findById(productId);
+
+    if (!product) throw new Error("Product not found");
+
+    return JSON.parse(JSON.stringify(product));
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const updateProduct = async ({
+  productId,
+  product,
+  path,
+}: UpdateProductParams) => {
+  try {
+    await connectToDatabase();
+
+    const updatedProduct = await Products.findByIdAndUpdate(
+      productId,
+      { ...product },
+      { new: true }
+    );
+    revalidatePath(path);
+
+    return JSON.parse(JSON.stringify(updatedProduct));
+  } catch (error) {
+    handleError(error);
+  }
+};

@@ -27,7 +27,7 @@ export const productSchema = z.object({
   description: z
     .string()
     .min(3, "Use 3 characters or more")
-    .max(400, "Description must be less than 400 characters"),
+    .max(1000, "Description must be less than 1000 characters"),
   featured_image: z.string(),
 });
 

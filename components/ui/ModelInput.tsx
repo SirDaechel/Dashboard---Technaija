@@ -5,8 +5,8 @@ type ModelInputType = {
   label: string;
   data: any[];
   setData: React.Dispatch<React.SetStateAction<any[]>>;
-  error: string;
-  setError: React.Dispatch<React.SetStateAction<string>>;
+  error?: string;
+  setError?: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const ModelInput: React.FC<ModelInputType> = ({
@@ -26,7 +26,7 @@ const ModelInput: React.FC<ModelInputType> = ({
       if (inputValue.trim() !== "") {
         setData([...data, { text: inputValue.trim() }]);
         setInputValue("");
-        setError("");
+        setError && setError("");
       }
     }
   };
@@ -70,7 +70,7 @@ const ModelInput: React.FC<ModelInputType> = ({
           onKeyDown={(e) => addModel(e)}
         />
       </div>
-      <p className="text-red-500">{error}</p>
+      <p className="text-red-500">{error && error}</p>
     </section>
   );
 };

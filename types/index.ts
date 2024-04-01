@@ -69,7 +69,7 @@ type TProduct = {
   category: string;
   original_category: string;
   gallery?: {
-    id: string;
+    _id?: string;
     image: string;
   }[];
   featured_image: string;
@@ -105,6 +105,12 @@ type NewCategoryParams = {
 };
 
 type CreateProductParams = {
+  product: NewProduct;
+  path: string;
+};
+
+type UpdateProductParams = {
+  productId: string;
   product: NewProduct;
   path: string;
 };

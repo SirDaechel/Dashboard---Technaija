@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { formatNumber } from "@/libs/utils";
+import { createURL, formatNumber } from "@/libs/utils";
 import { Dispatch, SetStateAction } from "react";
 import { setOverlay } from "@/libs/redux-state/features/overlay/overlaySlice";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -14,6 +15,7 @@ type ProductTableProps = {
   handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
   setSingleProductToBeDeleted: Dispatch<SetStateAction<string>>;
+  UrlSearchParams: URLSearchParams;
 };
 
 const ProductsTableBody = ({
@@ -22,13 +24,23 @@ const ProductsTableBody = ({
   handleCheckboxChange,
   setShowDeleteModal,
   setSingleProductToBeDeleted,
+  UrlSearchParams,
 }: ProductTableProps) => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const openDeleteModal = (productId: string) => {
     dispatch(setOverlay(true));
     setShowDeleteModal(true);
     setSingleProductToBeDeleted(productId);
+  };
+
+  const getProductToEdit = (productId: string) => {
+    UrlSearchParams.set("edit", productId);
+    // Call the function that creates a URL string with the data from UrlSearchParams
+    const pageURL = createURL("/products/edit-product", UrlSearchParams);
+    // Push the created URL string to the URL
+    router.push(`${pageURL}`);
   };
 
   return (
@@ -59,7 +71,11 @@ const ProductsTableBody = ({
           <td className="text-sm">{formatNumber(product.price, "₦")}</td>
           <td>
             <div className="flex gap-2">
-              <button type="button" className="h-full text-sm">
+              <button
+                type="button"
+                className="h-full text-sm"
+                onClick={() => getProductToEdit(product._id)}
+              >
                 Edit
               </button>
               <span> | </span>
