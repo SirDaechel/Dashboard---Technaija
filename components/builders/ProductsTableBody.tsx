@@ -14,7 +14,7 @@ type ProductTableProps = {
   checkedItems: CheckedItems;
   handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
-  setSingleProductToBeDeleted: Dispatch<SetStateAction<string>>;
+  setSingleProductToBeDeleted: Dispatch<SetStateAction<string | undefined>>;
   UrlSearchParams: URLSearchParams;
 };
 

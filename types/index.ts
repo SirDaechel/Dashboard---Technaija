@@ -38,7 +38,7 @@ type getProductParams = {
 };
 
 type deleteProductsParams = {
-  products: { id: string; checked?: boolean }[];
+  products: { id: string }[];
   path?: string;
 };
 
@@ -113,4 +113,37 @@ type UpdateProductParams = {
   productId: string;
   product: NewProduct;
   path: string;
+};
+
+type Users = {
+  _id: string;
+  clerkId?: string;
+  email: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  photo: string;
+};
+
+type UsersWithOrderCount = {
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  photo: string;
+  numberOfOrders: number;
+};
+
+type CheckedItems = {
+  [key: string]: boolean;
+};
+
+type GetCustomersWithOrderCountParams = {
+  limit: number;
+  page: number | undefined;
+};
+
+type deleteCustomersParams = {
+  customers: { id: string }[];
+  path?: string;
 };

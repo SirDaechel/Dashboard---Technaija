@@ -1,8 +1,8 @@
-import { getTopCustomers } from "@/libs/actions/order.actions";
+import { getCustomersWithOrderCount } from "@/libs/actions/order.actions";
 import Image from "next/image";
 
 const TopCustomers = async () => {
-  const topCustomers = await getTopCustomers();
+  const topCustomers = await getCustomersWithOrderCount();
 
   return (
     <section className="w-full p-2 border-[1px] border-gray-300">

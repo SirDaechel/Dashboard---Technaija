@@ -14,10 +14,6 @@ import DeletePopup from "../builders/DeletePopup";
 import { setOverlay } from "@/libs/redux-state/features/overlay/overlaySlice";
 import { useDispatch } from "react-redux";
 
-type CheckedItems = {
-  [key: string]: boolean;
-};
-
 const ProductsContent = () => {
   const [products, setProducts] = useState<TProduct[]>();
   const [pageNumbers, setPageNumbers] = useState<number[]>();
@@ -29,12 +25,11 @@ const ProductsContent = () => {
   const [checkedProducts, setCheckedProduct] = useState<
     {
       id: string;
-      checked: boolean;
     }[]
   >([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [singleProductToBeDeleted, setSingleProductToBeDeleted] =
-    useState<string>("");
+    useState<string>();
 
   const searchParams = useSearchParams();
   const UrlSearchParams = new URLSearchParams(searchParams.toString());
@@ -69,7 +64,6 @@ const ProductsContent = () => {
   useEffect(() => {
     const newCheckedProducts = Object.keys(checkedItems).map((key) => ({
       id: key,
-      checked: checkedItems[key],
     }));
     setCheckedProduct(newCheckedProducts);
   }, [checkedItems]);
@@ -79,7 +73,9 @@ const ProductsContent = () => {
     if (products && products.length <= 1) setShowLoader2(true);
 
     // If productId is true, then make it into an array and pass it as the value to the "products" key in the deleteProduct function
-    const idToArray = [{ id: singleProductToBeDeleted }];
+    const idToArray = singleProductToBeDeleted
+      ? [{ id: singleProductToBeDeleted }]
+      : [];
 
     if (checkedProducts.length > 0) {
       await deleteProduct({
@@ -125,7 +121,7 @@ const ProductsContent = () => {
       <DeletePopup
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
-        deleteProducts={deleteProducts}
+        deleteItem={deleteProducts}
       />
       {showLoader2 && (
         <section className="absolute w-full h-full top-0 bottom-0 left-0 right-0 transition-[0.3] ease-in-out duration-300 bg-white opacity-70 z-[56]">
@@ -133,12 +129,12 @@ const ProductsContent = () => {
         </section>
       )}
       <div className="flex items-center justify-between gap-2">
-        <SearchBox query={query} setQuery={setQuery} />
+        <SearchBox query={query} setQuery={setQuery} placeholder="products" />
         <div className="flex items-center justify-center gap-3">
           <button
             type="button"
             className="py-2 px-3 border-[1px] border-gray-400 text-sm"
-            onClick={() => deleteProducts()}
+            onClick={deleteProducts}
           >
             Delete product(s)
           </button>

@@ -5,13 +5,13 @@ import { useDispatch } from "react-redux";
 type DeletePopupProps = {
   showDeleteModal: boolean;
   setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
-  deleteProducts: () => Promise<void>;
+  deleteItem: () => Promise<void>;
 };
 
 const DeletePopup = ({
   showDeleteModal,
   setShowDeleteModal,
-  deleteProducts,
+  deleteItem,
 }: DeletePopupProps) => {
   const dispatch = useDispatch();
 
@@ -24,7 +24,9 @@ const DeletePopup = ({
     <>
       {showDeleteModal && (
         <section className="modal z-20 border-[1px] border-gray-300 p-6 bg-white">
-          <p className="mb-8">This action is irreversible. Delete product?</p>
+          <p className="mb-8">
+            This action is irreversible. Do you want to proceed?
+          </p>
           <div className="flex gap-3 items-center justify-center">
             <button
               type="button"
@@ -36,7 +38,7 @@ const DeletePopup = ({
             <button
               type="button"
               className="bg-[#272829] py-2 px-4 text-white"
-              onClick={deleteProducts}
+              onClick={deleteItem}
             >
               Delete
             </button>

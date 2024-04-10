@@ -610,7 +610,7 @@ export const getOrderCategoryCount = async () => {
 };
 
 // Get top customers (customers with most orders)
-export const getTopCustomers = async () => {
+export const getCustomersWithOrderCount = async () => {
   try {
     await connectToDatabase();
 

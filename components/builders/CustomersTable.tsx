@@ -1,36 +1,27 @@
-import { Dispatch, SetStateAction } from "react";
-import ProductsTableBody from "./ProductsTableBody";
-import ProductsTableHead from "./ProductsTableHead";
+import React, { Dispatch, SetStateAction } from "react";
+import CustomersTableHead from "./CustomersTableHead";
 import Loader from "../ui/Loader";
+import CustomerTableBody from "./CustomerTableBody";
 
-type CheckedItems = {
-  [key: string]: boolean;
-};
-
-type ProductTableProps = {
-  products: TProduct[] | undefined;
-  setProducts: Dispatch<SetStateAction<TProduct[] | undefined>>;
+type CustomersTableProps = {
+  customers: UsersWithOrderCount[] | undefined;
+  setCustomers: Dispatch<SetStateAction<UsersWithOrderCount[] | undefined>>;
+  showLoader?: boolean;
   checkedItems: CheckedItems;
   setCheckedItems: Dispatch<SetStateAction<CheckedItems>>;
-  showLoader?: boolean;
   setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
-  setShowLoader2: Dispatch<SetStateAction<boolean>>;
-  pageNumbers: number[] | undefined;
-  currentPage: number;
-  setSingleProductToBeDeleted: Dispatch<SetStateAction<string | undefined>>;
-  UrlSearchParams: URLSearchParams;
+  setSingleCustomerToBeDeleted: Dispatch<SetStateAction<string | undefined>>;
 };
 
-const ProductTable = ({
+const CustomersTable = ({
+  customers,
+  setCustomers,
+  showLoader,
   checkedItems,
   setCheckedItems,
-  products,
-  setProducts,
-  showLoader,
   setShowDeleteModal,
-  setSingleProductToBeDeleted,
-  UrlSearchParams,
-}: ProductTableProps) => {
+  setSingleCustomerToBeDeleted,
+}: CustomersTableProps) => {
   // Function to handle individual checkbox toggle
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
@@ -60,8 +51,8 @@ const ProductTable = ({
       if (isChecked) {
         const newCheckedItems: CheckedItems = {};
 
-        products?.forEach((product: TProduct) => {
-          newCheckedItems[product._id] = true;
+        customers?.forEach((customer: UsersWithOrderCount) => {
+          newCheckedItems[customer._id] = true;
         });
         return newCheckedItems;
       } else {
@@ -76,32 +67,31 @@ const ProductTable = ({
       {!showLoader ? (
         <>
           <table className="w-full">
-            <ProductsTableHead
-              products={products}
-              setProducts={setProducts}
+            <CustomersTableHead
+              customers={customers}
+              setCustomers={setCustomers}
               checkedItems={checkedItems}
               selectAll={selectAll}
             />
-            {products && products.length > 0 && (
-              <ProductsTableBody
-                products={products}
+            {customers && customers.length > 0 && (
+              <CustomerTableBody
+                customers={customers}
                 checkedItems={checkedItems}
                 handleCheckboxChange={handleCheckboxChange}
                 setShowDeleteModal={setShowDeleteModal}
-                setSingleProductToBeDeleted={setSingleProductToBeDeleted}
-                UrlSearchParams={UrlSearchParams}
+                setSingleCustomerToBeDeleted={setSingleCustomerToBeDeleted}
               />
             )}
           </table>
-          {!products ? (
+          {!customers ? (
             <p className="w-full mt-4 text-center">
-              There are no products available
+              There are no customers available
             </p>
           ) : (
-            products &&
-            products?.length <= 0 && (
+            customers &&
+            customers?.length <= 0 && (
               <p className="w-full mt-4 text-center">
-                There are no products available
+                There are no customers available
               </p>
             )
           )}
@@ -115,4 +105,4 @@ const ProductTable = ({
   );
 };
 
-export default ProductTable;
+export default CustomersTable;

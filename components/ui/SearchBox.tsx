@@ -4,9 +4,10 @@ import { Dispatch, SetStateAction } from "react";
 type SearchBoxProp = {
   query: string;
   setQuery: Dispatch<SetStateAction<string>>;
+  placeholder: string;
 };
 
-const SearchBox = ({ query, setQuery }: SearchBoxProp) => {
+const SearchBox = ({ query, setQuery, placeholder }: SearchBoxProp) => {
   const clearQuery = () => {
     setQuery("");
   };
@@ -18,7 +19,7 @@ const SearchBox = ({ query, setQuery }: SearchBoxProp) => {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search product"
+        placeholder={`Search ${placeholder}`}
       />
       {query && (
         <Image
