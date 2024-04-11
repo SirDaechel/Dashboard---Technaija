@@ -41,8 +41,8 @@ const LineChart = () => {
     const getChartData = async () => {
       setShowLoader(true);
       const retrivedChartData = await getEachMonthOrderCount();
-      setMonths(retrivedChartData && retrivedChartData.months);
-      setOrderCount(retrivedChartData && retrivedChartData.ordersCount);
+      setMonths(retrivedChartData ? retrivedChartData.months : []);
+      setOrderCount(retrivedChartData ? retrivedChartData.ordersCount : []);
       setShowLoader(false);
     };
     getChartData();

@@ -47,15 +47,6 @@ const SideBarNav = () => {
           text="Customers"
         />
       </Link>
-      <Link href="/notifications">
-        <Button
-          classname={`w-full flex items-center gap-3 ${
-            pathname === "/notifications" && "bg-[#45474B]"
-          }`}
-          src="/bell.svg"
-          text="Notifications"
-        />
-      </Link>
       <Link href="/coupons">
         <Button
           classname={`w-full flex items-center gap-3 ${

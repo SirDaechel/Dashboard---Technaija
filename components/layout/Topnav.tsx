@@ -23,9 +23,9 @@ const Topnav = () => {
             ? "Edit product"
             : pathname === "/customers"
             ? "Customers"
-            : pathname === "/notifications"
-            ? "Notifications"
             : pathname === "/coupons"
+            ? "Coupons"
+            : pathname === "/coupons/create-coupon"
             ? "Coupons"
             : "Technaija"}
         </h3>

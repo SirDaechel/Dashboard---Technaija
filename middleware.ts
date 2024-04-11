@@ -9,6 +9,8 @@ export default authMiddleware({
     "/orders",
     "/products",
     "/customers",
+    "/coupons",
+    "/coupons/create-coupon",
     "/products/create-product",
     "/products/edit-product",
     "/api/uploadthing",

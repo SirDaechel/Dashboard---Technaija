@@ -35,8 +35,10 @@ const TopCatgeoryChart = () => {
     const getChartData = async () => {
       setShowLoader(true);
       const retrivedChartData = await getOrderCategoryCount();
-      setCategory(retrivedChartData && retrivedChartData.category);
-      setCategoryCount(retrivedChartData && retrivedChartData.categoryCount);
+      setCategory(retrivedChartData ? retrivedChartData.category : []);
+      setCategoryCount(
+        retrivedChartData ? retrivedChartData.categoryCount : []
+      );
       setShowLoader(false);
     };
     getChartData();

@@ -68,7 +68,7 @@ const OrdersContent = ({ location }: OrdersContentProp) => {
       />
       {orders && orders.length > 0 && (
         <Pagination
-          pageNumbers={pageNumbers}
+          pageNumbers={pageNumbers ? pageNumbers : []}
           currentPage={currentPage}
           UrlSearchParams={UrlSearchParams}
           urlKey="page"

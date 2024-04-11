@@ -32,3 +32,12 @@ export const productSchema = z.object({
 });
 
 export type TProductSchema = z.infer<typeof productSchema>;
+
+// CREATE COUPON SCHEMA
+export const couponSchema = z.object({
+  code: z.string().min(3, "Use 3 characters or more"),
+  discount: z.string(),
+  limit: z.string().optional(),
+});
+
+export type TCouponSchema = z.infer<typeof couponSchema>;

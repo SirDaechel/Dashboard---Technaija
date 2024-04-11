@@ -147,3 +147,31 @@ type deleteCustomersParams = {
   customers: { id: string }[];
   path?: string;
 };
+
+type TCoupon = {
+  _id: string;
+  code: string;
+  discount: string;
+  limit?: string;
+};
+
+type NewCoupon = {
+  code: string;
+  discount: string;
+  limit?: string;
+};
+
+type NewCouponParams = {
+  coupon: NewCoupon;
+  path: string;
+};
+
+type GetCouponsParam = {
+  limit: number;
+  page?: number;
+};
+
+type deleteCouponsParams = {
+  coupons: { id: string }[];
+  path?: string;
+};

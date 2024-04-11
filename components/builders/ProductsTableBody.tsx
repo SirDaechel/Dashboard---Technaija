@@ -5,10 +5,6 @@ import { setOverlay } from "@/libs/redux-state/features/overlay/overlaySlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
-type CheckedItems = {
-  [key: string]: boolean;
-};
-
 type ProductTableProps = {
   products: TProduct[] | undefined;
   checkedItems: CheckedItems;

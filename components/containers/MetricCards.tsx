@@ -27,17 +27,47 @@ export default function MetricCards() {
       ]);
 
       // On initial render, get the total revenue for the last six months
-      setTotalRevenue(formatNumber(ordersRevenue?.theTotalRevenue, "₦"));
-      setRevenuePercentage(Number(ordersRevenue?.percentageChange?.toFixed(2)));
+      setTotalRevenue(
+        formatNumber(
+          ordersRevenue?.theTotalRevenue ? ordersRevenue?.theTotalRevenue : 0,
+          "₦"
+        )
+      );
+      setRevenuePercentage(
+        Number(
+          ordersRevenue?.percentageChange
+            ? ordersRevenue?.percentageChange?.toFixed(2)
+            : 0
+        )
+      );
 
       // On initial render, set the total order for the last six months
-      if (ordersTotal) setTotalOrders(ordersTotal.totalOrders.toString());
-      setOrdersPercentage(Number(ordersTotal?.percentageChange?.toFixed(2)));
+      if (ordersTotal) {
+        setTotalOrders(ordersTotal.totalOrders.toString());
+      } else {
+        setTotalOrders("0");
+      }
+      setOrdersPercentage(
+        Number(
+          ordersTotal?.percentageChange
+            ? ordersTotal?.percentageChange?.toFixed(2)
+            : 0
+        )
+      );
 
       // On initial render, set the total profit for the last six months
-      setTotaProfit(formatNumber(totalProfit?.lastSixMonthProfit, "₦"));
+      setTotaProfit(
+        formatNumber(
+          totalProfit?.lastSixMonthProfit ? totalProfit?.lastSixMonthProfit : 0,
+          "₦"
+        )
+      );
       setProfitPercentage(
-        Number(totalProfit?.profitPercentageChange?.toFixed(2))
+        Number(
+          totalProfit?.profitPercentageChange
+            ? totalProfit?.profitPercentageChange?.toFixed(2)
+            : 0
+        )
       );
 
       getOrderCategoryCount();

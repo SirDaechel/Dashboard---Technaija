@@ -10,30 +10,34 @@ const TopCustomers = async () => {
         Top customers
       </h3>
       <div className="flex flex-col gap-3 justify-between py-2">
-        {topCustomers?.slice(0, 4).map((customer) => (
-          <div key={customer.userId} className="flex items-center gap-3">
-            <Image
-              className="rounded-full"
-              src={customer.userPhoto}
-              width={40}
-              height={40}
-              alt="customer-img"
-            />
-            <div className="w-full flex items-center justify-between">
-              <span className="flex flex-col gap-1 items-start">
-                <p className="text-sm">
-                  {customer.firstName} {customer.lastName}
+        {topCustomers && topCustomers.length > 0 ? (
+          topCustomers.slice(0, 4).map((customer) => (
+            <div key={customer.userId} className="flex items-center gap-3">
+              <Image
+                className="rounded-full"
+                src={customer.userPhoto}
+                width={40}
+                height={40}
+                alt="customer-img"
+              />
+              <div className="w-full flex items-center justify-between">
+                <span className="flex flex-col gap-1 items-start">
+                  <p className="text-sm">
+                    {customer.firstName} {customer.lastName}
+                  </p>
+                  <p className="text-xs text-gray-500 font-normal">
+                    {customer.email}
+                  </p>
+                </span>
+                <p className="p-1 bg-[#272829] text-white rounded-full text-xs">
+                  {customer.ordersCount}
                 </p>
-                <p className="text-xs text-gray-500 font-normal">
-                  {customer.email}
-                </p>
-              </span>
-              <p className="p-1 bg-[#272829] text-white rounded-full text-xs">
-                {customer.ordersCount}
-              </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-center pt-8">No customer</p>
+        )}
       </div>
     </section>
   );

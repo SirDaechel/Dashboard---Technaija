@@ -30,17 +30,28 @@ export const getOrders = async ({ limit, page, status }: getOrdersParams) => {
       },
     ]);
 
-    const { total, success, pending, failed } = counts;
+    let totalCount;
+    let successCount;
+    let pendingCount;
+    let failedCount;
+
+    if (counts) {
+      const { total, success, pending, failed } = counts;
+      totalCount = total;
+      successCount = success;
+      pendingCount = pending;
+      failedCount = failed;
+    }
 
     // Get the total number of the current order query (this is necessary because the query could change if status is defined)
     const totalPages = Math.ceil(
-      status === "success"
-        ? success / limit
+      status === "success" && counts
+        ? successCount / limit
         : status === "pending"
-        ? pending / limit
+        ? pendingCount / limit
         : status === "failed"
-        ? failed / limit
-        : total / limit
+        ? failedCount / limit
+        : totalCount / limit
     );
 
     const pageNumbers: number[] = [];
@@ -64,10 +75,10 @@ export const getOrders = async ({ limit, page, status }: getOrdersParams) => {
     return {
       orders: JSON.parse(JSON.stringify(ordersData)),
       pageNumbers: pageNumbers,
-      ordersCount: total,
-      ordersSuccessCount: success,
-      ordersPendingCount: pending,
-      ordersFailedCount: failed,
+      ordersCount: totalCount,
+      ordersSuccessCount: successCount,
+      ordersPendingCount: pendingCount,
+      ordersFailedCount: failedCount,
     };
   } catch (error) {
     handleError(error);
@@ -81,7 +92,7 @@ export const getAllOrdersCount = async () => {
 
     const allOrders = await Orders.countDocuments();
 
-    return allOrders;
+    return allOrders || 0;
   } catch (error) {
     handleError(error);
   }

@@ -3,7 +3,6 @@
 import { connectToDatabase } from "../database";
 import { handleError } from "../utils";
 import Users from "../database/models/customer.model";
-import Orders from "../database/models/order.model";
 import { revalidatePath } from "next/cache";
 
 export const getCustomers = async ({ limit }: getCustomersParams) => {
