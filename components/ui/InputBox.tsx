@@ -10,6 +10,7 @@ type InputType = {
   required?: boolean;
   value?: string;
   setValue?: Dispatch<SetStateAction<string>>;
+  style?: string;
 };
 
 const InputBox = ({
@@ -22,6 +23,7 @@ const InputBox = ({
   required,
   value,
   setValue,
+  style,
 }: InputType) => {
   return (
     <section className="w-full flex flex-col">
@@ -33,7 +35,7 @@ const InputBox = ({
       </label>
       <input
         {...inputRegister}
-        className="p-3 transition border-[1px] border-gray-400 text-sm focus:border-[#272829] focus:transition focus:outline-none"
+        className={`p-3 transition border-[1px] border-gray-400 text-sm focus:border-[#272829] focus:transition focus:outline-none ${style}`}
         type={inputType}
         id={htmlFor}
         placeholder={placeholder}

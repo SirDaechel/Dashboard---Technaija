@@ -18,6 +18,8 @@ const CouponForm = () => {
   } = useForm<TCouponSchema>({ resolver: zodResolver(couponSchema) });
 
   const onSubmit = async (data: TCouponSchema) => {
+    // Make the code uppercase before submission
+    data.code = data.code.toUpperCase();
     await createCoupon({ coupon: data, path: "/coupons" });
     router.push("/coupons");
     reset();
@@ -32,6 +34,7 @@ const CouponForm = () => {
             label="Coupon Code"
             htmlFor="Coupon Code"
             inputType="text"
+            style="uppercase"
             required
             error={
               errors.code && (
