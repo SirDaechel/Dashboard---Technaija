@@ -128,20 +128,22 @@ const ProductsContent = () => {
           <Loader className="loader2" />
         </section>
       )}
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between gap-2 m:flex-col">
         <SearchBox query={query} setQuery={setQuery} placeholder="products" />
-        <div className="flex items-center justify-center gap-3">
-          <button
-            type="button"
-            className="py-2 px-3 border-[1px] border-gray-400 text-sm"
-            onClick={deleteProducts}
-          >
-            Delete product(s)
-          </button>
-          <PerPageDropdown perPage={perPage} setPerPage={setPerPage} />
+        <div className="flex items-center justify-center gap-3 m:flex-col m:gap-6 m:w-full">
+          <div className="m:w-full flex justify-between gap-2">
+            <button
+              type="button"
+              className="py-2 px-3 border-[1px] border-gray-400 text-sm"
+              onClick={deleteProducts}
+            >
+              Delete product(s)
+            </button>
+            <PerPageDropdown perPage={perPage} setPerPage={setPerPage} />
+          </div>
           <LinkButton
             text="Create Product"
-            classname="min-w-max bg-[#272829] text-white py-2 px-3"
+            classname="min-w-max bg-[#272829] text-white py-2 px-3 m:w-full m:text-center"
             link="/products/create-product"
           />
         </div>

@@ -122,9 +122,9 @@ const CustomersContent = () => {
         setShowDeleteModal={setShowDeleteModal}
         deleteItem={deleteCustomers}
       />
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between gap-2 m:flex-col">
         <SearchBox query={query} setQuery={setQuery} placeholder="customers" />
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex items-center justify-center gap-3 m:w-full m:justify-between">
           <button
             type="button"
             className="py-2 px-3 border-[1px] border-gray-400 text-sm"

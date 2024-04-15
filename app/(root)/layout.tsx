@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main className="flex items-start justify-start m:flex-col">
         <SideBar />
         <MobileMenu />
-        <section className="w-[85%] m:w-full">
+        <section className="w-[85%] m:w-full xl:w-[75%]">
           <Topnav />
           <div className="m:mt-20">{children}</div>
         </section>

@@ -122,20 +122,22 @@ const CouponsContent = () => {
           <Loader className="loader2" />
         </section>
       )}
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between gap-2 m:flex-col">
         <SearchBox query={query} setQuery={setQuery} placeholder="coupon" />
-        <div className="flex items-center justify-center gap-3">
-          <button
-            type="button"
-            className="py-2 px-3 border-[1px] border-gray-400 text-sm"
-            onClick={deleteCoupons}
-          >
-            Delete coupon(s)
-          </button>
-          <PerPageDropdown perPage={perPage} setPerPage={setPerPage} />
+        <div className="flex items-center justify-center gap-3 m:flex-col m:gap-6 m:w-full">
+          <div className="m:w-full flex justify-between gap-2">
+            <button
+              type="button"
+              className="py-2 px-3 border-[1px] border-gray-400 text-sm"
+              onClick={deleteCoupons}
+            >
+              Delete coupon(s)
+            </button>
+            <PerPageDropdown perPage={perPage} setPerPage={setPerPage} />
+          </div>
           <LinkButton
             text="Create Coupon"
-            classname="min-w-max bg-[#272829] text-white py-2 px-3"
+            classname="min-w-max bg-[#272829] text-white py-2 px-3 m:w-full m:text-center"
             link="/coupons/create-coupon"
           />
         </div>

@@ -3,12 +3,12 @@ import SideBarNav from "../builders/SideBarNav";
 import Link from "next/link";
 
 type SideBarMenuProps = {
-  closeMobileMenu: () => void;
+  closeMobileMenu?: () => void;
 };
 
 const SideBarMenu = ({ closeMobileMenu }: SideBarMenuProps) => {
   return (
-    <aside className="w-[15%] bg-[#272829] p-8 fixed top-0 left-0 bottom-0 flex flex-col items-center justify-start m:w-full m:gap-24">
+    <aside className="w-[15%] bg-[#272829] p-8 fixed top-0 left-0 bottom-0 flex flex-col items-center justify-start m:w-full m:gap-24 xl:w-[25%] ultra:relative ultra:h-screen ultra:w-full">
       <Image
         className="mb-10 m:mb-0 m:w-[100px] m:h-[100px]"
         src="/thetechnaija.svg"
@@ -17,7 +17,7 @@ const SideBarMenu = ({ closeMobileMenu }: SideBarMenuProps) => {
         alt="logo"
       />
       <section className="flex flex-col h-full justify-between m:gap-10 m:w-full">
-        <SideBarNav closeMobileMenu={closeMobileMenu} />
+        <SideBarNav closeMobileMenu={closeMobileMenu && closeMobileMenu} />
         <Link
           href="https://technaija.vercel.app/"
           target="_blank"

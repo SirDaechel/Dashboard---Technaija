@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 type SideBarNavProps = {
-  closeMobileMenu: () => void;
+  closeMobileMenu: (() => void) | undefined;
 };
 
 const SideBarNav = ({ closeMobileMenu }: SideBarNavProps) => {

@@ -166,8 +166,8 @@ const ProductForm = ({ type, product }: ProductFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <section className="flex items-start justify-start gap-6">
-        <div className="w-[70%] flex flex-col gap-8">
+      <section className="flex items-start justify-start gap-6 m:flex-col m:w-full">
+        <div className="w-[70%] flex flex-col gap-8 m:w-full">
           <div className="h-fit border-[1px] border-gray-300 p-4 overflow-hidden">
             <h2 className="font-medium text-lg mb-4">General</h2>
             <div className="flex flex-col gap-8">
@@ -266,7 +266,7 @@ const ProductForm = ({ type, product }: ProductFormProps) => {
             </div>
           </div>
         </div>
-        <div className="w-[30%] flex flex-col gap-8">
+        <div className="w-[30%] flex flex-col gap-8 m:w-full">
           <div className="border-[1px] border-gray-300 p-4 overflow-hidden">
             <h2 className="font-medium text-lg mb-4">Thumbnail</h2>
             <div className="flex flex-col gap-4 items-center">

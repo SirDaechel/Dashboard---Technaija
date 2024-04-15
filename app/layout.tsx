@@ -28,10 +28,12 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={jost.className}>
-          <ReduxProvider>
-            <Overlay />
-            {children}
-          </ReduxProvider>
+          <section className="ultra:max-w-[1300px] ultra:mx-auto">
+            <ReduxProvider>
+              <Overlay />
+              {children}
+            </ReduxProvider>
+          </section>
         </body>
       </html>
     </ClerkProvider>

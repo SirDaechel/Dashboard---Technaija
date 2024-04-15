@@ -9,7 +9,7 @@ const Overlay = () => {
 
   return (
     <section
-      className="bg-black w-full h-full fixed top-0 right-0 opacity-50 z-20"
+      className="bg-black w-full h-full fixed top-0 right-0 opacity-50 z-[35]"
       style={{ display: overlay ? "block" : "none" }}
     ></section>
   );

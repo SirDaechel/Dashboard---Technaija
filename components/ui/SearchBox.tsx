@@ -13,7 +13,7 @@ const SearchBox = ({ query, setQuery, placeholder }: SearchBoxProp) => {
   };
 
   return (
-    <section className="flex items-center justify-between gap-2 py-2 px-3 w-[25%] border-[1px] border-gray-300 my-4">
+    <section className="flex items-center justify-between gap-2 py-2 px-3 w-[25%] border-[1px] border-gray-300 my-4 m:w-full">
       <input
         className="w-full transition text-sm font-light focus:border-[#272829] focus:transition focus:outline-none"
         type="text"
