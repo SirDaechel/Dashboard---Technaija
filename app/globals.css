@@ -64,3 +64,23 @@ td {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+@layer utilities {
+  @variants responsive {
+    .animate-slideInLeft {
+      animation: slideInLeft 0.3s ease-in;
+      animation-fill-mode: both;
+    }
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-0);
+    opacity: 1;
+  }
+}

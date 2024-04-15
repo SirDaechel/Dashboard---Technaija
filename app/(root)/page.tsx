@@ -10,7 +10,7 @@ export default async function Home() {
 
   return (
     <section className="p-6">
-      <div className="w-full grid grid-cols-3 gap-4">
+      <div className="w-full grid grid-cols-3 gap-4 m:flex m:flex-col">
         <MetricCards />
         <SalesBarChart />
         <div className="grid grid-rows-2 gap-4">

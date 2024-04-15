@@ -50,7 +50,7 @@ const OrdersContent = ({ location }: OrdersContentProp) => {
 
   return (
     <section>
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between gap-2 m:flex-col m:items-start m:gap-4">
         <OrdersTabs
           ordersCount={ordersCount ? ordersCount : 0}
           ordersSuccessCount={ordersSuccessCount ? ordersSuccessCount : 0}

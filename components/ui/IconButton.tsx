@@ -12,7 +12,13 @@ const Button = ({ classname, src, text }: ButtonProp) => {
       type="button"
       className={`hover:bg-[#45474B] py-3 px-4 rounded-md transition ${classname}`}
     >
-      <Image src={src} width={20} height={20} alt={text} />
+      <Image
+        className="m:w-[25px] m:h-[25px]"
+        src={src}
+        width={20}
+        height={20}
+        alt={text}
+      />
       <p className="text-white">{text}</p>
     </button>
   );

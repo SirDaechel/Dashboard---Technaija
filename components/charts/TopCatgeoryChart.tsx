@@ -80,7 +80,7 @@ const TopCatgeoryChart = () => {
 
     maintainAspectRatio: true,
 
-    aspectRatio: isScreenWidth <= 767 ? 0.9 : 2,
+    aspectRatio: isScreenWidth <= 767 ? 1.5 : 2,
 
     indexAxis: "y",
 

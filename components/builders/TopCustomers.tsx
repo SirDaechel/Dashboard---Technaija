@@ -6,7 +6,7 @@ const TopCustomers = async () => {
 
   return (
     <section className="w-full p-2 border-[1px] border-gray-300">
-      <h3 className="pb-2 border-b-[1px] border-b-gray-300 font-medium">
+      <h3 className="pb-2 border-b-[1px] border-b-gray-300 font-medium m:text-xl">
         Top customers
       </h3>
       <div className="flex flex-col gap-3 justify-between py-2">

@@ -83,9 +83,9 @@ const LineChart = () => {
 
     maintainAspectRatio: true,
 
-    aspectRatio: isScreenWidth <= 767 ? 0.9 : 2,
+    aspectRatio: isScreenWidth <= 767 ? 1 : 2,
 
-    // indexAxis: "y",
+    indexAxis: isScreenWidth <= 767 ? "y" : "x",
 
     scales: {
       x: {
@@ -134,7 +134,7 @@ const LineChart = () => {
       <div className="flex items-center justify-between mb-8">
         <span>
           <h2 className="font-medium text-xl">Sales Overview</h2>
-          <p className="text-sm">Completed sales made overtime</p>
+          <p className="text-sm m:text-xs">Completed sales made overtime</p>
         </span>
         <div className="relative">
           <button

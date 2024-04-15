@@ -77,7 +77,7 @@ export default function MetricCards() {
   }, []);
 
   return (
-    <section className="w-full grid grid-cols-3 col-span-3 gap-4">
+    <section className="w-full grid grid-cols-3 col-span-3 gap-4 m:flex m:flex-col">
       <MetricCard
         type="revenue"
         title="Total Revenue"
