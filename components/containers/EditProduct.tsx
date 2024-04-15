@@ -8,6 +8,7 @@ import Loader from "../ui/Loader";
 
 const EditProduct = () => {
   const [productToEdit, setProductToEdit] = useState<TProduct>();
+
   const searchParams = useSearchParams();
   const UrlSearchParams = new URLSearchParams(searchParams.toString());
   const productId = UrlSearchParams.get("edit");
