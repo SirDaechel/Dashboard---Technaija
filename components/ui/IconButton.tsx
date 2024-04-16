@@ -13,7 +13,7 @@ const Button = ({ classname, src, text }: ButtonProp) => {
       className={`hover:bg-[#45474B] py-3 px-4 rounded-md transition ${classname}`}
     >
       <Image
-        className="m:w-[25px] m:h-[25px]"
+        className="m:w-[20px] m:h-[20px]"
         src={src}
         width={20}
         height={20}

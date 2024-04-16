@@ -15,7 +15,7 @@ const SideBarNav = ({ closeMobileMenu }: SideBarNavProps) => {
     <nav className="flex flex-col gap-1 m:items-center m:gap-6">
       <Link href="/" onClick={closeMobileMenu}>
         <Button
-          classname={`w-full flex items-center gap-3 m:text-3xl ${
+          classname={`w-full flex items-center gap-3 m:text-2xl ${
             pathname === "/" && "bg-[#45474B]"
           }`}
           src="/dashboard.svg"
@@ -24,7 +24,7 @@ const SideBarNav = ({ closeMobileMenu }: SideBarNavProps) => {
       </Link>
       <Link href="/orders" onClick={closeMobileMenu}>
         <Button
-          classname={`w-full flex items-center gap-3 m:text-3xl ${
+          classname={`w-full flex items-center gap-3 m:text-2xl ${
             pathname === "/orders" && "bg-[#45474B]"
           }`}
           src="/orders.svg"
@@ -33,7 +33,7 @@ const SideBarNav = ({ closeMobileMenu }: SideBarNavProps) => {
       </Link>
       <Link href="/products" onClick={closeMobileMenu}>
         <Button
-          classname={`w-full flex items-center gap-3 m:text-3xl ${
+          classname={`w-full flex items-center gap-3 m:text-2xl ${
             (pathname === "/products" && "bg-[#45474B]") ||
             (pathname === "/products/create-product" && "bg-[#45474B]") ||
             (pathname === "/products/edit-product" && "bg-[#45474B]")
@@ -44,7 +44,7 @@ const SideBarNav = ({ closeMobileMenu }: SideBarNavProps) => {
       </Link>
       <Link href="/customers" onClick={closeMobileMenu}>
         <Button
-          classname={`w-full flex items-center gap-3 m:text-3xl ${
+          classname={`w-full flex items-center gap-3 m:text-2xl ${
             pathname === "/customers" && "bg-[#45474B]"
           }`}
           src="/customer.svg"
@@ -53,7 +53,7 @@ const SideBarNav = ({ closeMobileMenu }: SideBarNavProps) => {
       </Link>
       <Link href="/coupons" onClick={closeMobileMenu}>
         <Button
-          classname={`w-full flex items-center gap-3 m:text-3xl ${
+          classname={`w-full flex items-center gap-3 m:text-2xl ${
             (pathname === "/coupons" && "bg-[#45474B]") ||
             (pathname === "/coupons/create-coupon" && "bg-[#45474B]")
           }`}
