@@ -85,7 +85,8 @@ const LineChart = () => {
 
     aspectRatio: isScreenWidth <= 767 ? 1 : 2,
 
-    indexAxis: isScreenWidth <= 767 ? "y" : "x",
+    indexAxis: "x",
+    // indexAxis: isScreenWidth <= 767 ? "y" : "x",
 
     scales: {
       x: {
