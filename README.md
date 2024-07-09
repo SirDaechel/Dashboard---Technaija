@@ -31,16 +31,16 @@ This is the administrative interface for Technaija, an e-commerce platform. It p
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/technaija-admin.git
+git clone https://github.com/yourusername/dashboard-technaija.git
 ```
 2. Install dependencies
 ```bash 
-cd technaija
+cd dashboard-technaija
 npm install
 ```
 3. Set up environment variables
 - Create a `.env.local` file in the root directory
-- Add necessary environment variables (MongoDB URI, Clerk secret, Paystack API key, etc.)
+- Add necessary environment variables (MongoDB URI, etc.)
 4. Run the development server
 ```bash
 npm run dev
