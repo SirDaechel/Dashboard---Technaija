@@ -3,11 +3,8 @@
 import AddCategory from "@/components/builders/AddCategory";
 import ProductGallery from "@/components/builders/ProductGallery";
 import InputBox from "@/components/ui/InputBox";
-import ReactQuill from "react-quill";
 import { useEffect, useState } from "react";
-import "react-quill/dist/quill.snow.css";
 import ModelInput from "../ui/ModelInput";
-import { toolbarOptions } from "@/libs/react-quill";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TProductSchema, productSchema } from "@/libs/zod";
@@ -16,6 +13,7 @@ import { createProduct, updateProduct } from "@/libs/actions/product.action";
 import { useRouter } from "next/navigation";
 import { useUploadThing } from "@/libs/uploadthing";
 import { productDefaultValues } from "@/constants";
+import ReactQuillWrapper from "../ui/ReactQuillWrapper";
 
 type ProductFormProps = {
   type: string;
@@ -64,10 +62,6 @@ const ProductForm = ({ type, product }: ProductFormProps) => {
       setGallery(product.gallery ? product.gallery : []);
     }
   }, []);
-
-  const quillModule = {
-    toolbar: toolbarOptions,
-  };
 
   const {
     control,
@@ -186,19 +180,19 @@ const ProductForm = ({ type, product }: ProductFormProps) => {
                 <p className="font-light">
                   Short Description <span>(Optional)</span>
                 </p>
-                <Controller
-                  name="short_description"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <ReactQuill
-                      {...field}
-                      className="h-[15rem] mb-12"
-                      modules={quillModule}
-                      theme="snow"
-                    />
-                  )}
-                />
+                {typeof window !== "undefined" && (
+                  <Controller
+                    name="short_description"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <ReactQuillWrapper
+                        {...field}
+                        className="h-[15rem] mb-12"
+                      />
+                    )}
+                  />
+                )}
                 {errors.short_description && (
                   <p className="text-red-500">{`${errors.short_description.message}`}</p>
                 )}
@@ -243,19 +237,19 @@ const ProductForm = ({ type, product }: ProductFormProps) => {
                   <p className="font-light">
                     Main Description <span className="text-red-400">*</span>
                   </p>
-                  <Controller
-                    name="description"
-                    control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <ReactQuill
-                        {...field}
-                        className="h-[15rem] mb-12"
-                        modules={quillModule}
-                        theme="snow"
-                      />
-                    )}
-                  />
+                  {typeof window !== "undefined" && (
+                    <Controller
+                      name="description"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <ReactQuillWrapper
+                          {...field}
+                          className="h-[15rem] mb-12"
+                        />
+                      )}
+                    />
+                  )}
                   {errors.description && (
                     <p className="text-red-500">{`${errors.description.message}`}</p>
                   )}
