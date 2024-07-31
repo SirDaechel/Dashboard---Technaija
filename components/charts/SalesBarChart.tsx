@@ -50,7 +50,7 @@ const LineChart = () => {
   }, []);
 
   const data: ChartData<"bar"> = {
-    labels: months && months,
+    labels: months,
     datasets: [
       {
         label: "Orders",
@@ -145,7 +145,7 @@ const LineChart = () => {
           >
             <Image src="/calendar.svg" width={17} height={17} alt="calendar" />
             <p className="text-sm font-normal capitalize">
-              {selectedTimeFrame && selectedTimeFrame}
+              {selectedTimeFrame}
             </p>
             <Image
               src="/chevron-arrow-down.svg"

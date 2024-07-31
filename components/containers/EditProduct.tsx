@@ -19,7 +19,7 @@ const EditProduct = () => {
       try {
         // If `productId` is present, call `getProductById` to fetch product details.
         // Otherwise, pass an empty string to avoid invalid requests.
-        const product = await getProductById(productId ? productId : "");
+        const product = await getProductById(productId ?? "");
         // Update the state with the fetched product details for editing.
         setProductToEdit(product);
       } catch (error) {

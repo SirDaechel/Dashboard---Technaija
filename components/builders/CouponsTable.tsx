@@ -13,9 +13,7 @@ type CouponsTableProps = {
   checkedItems: CheckedItems;
   setCheckedItems: Dispatch<SetStateAction<CheckedItems>>;
   setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
-  setShowLoader2: Dispatch<SetStateAction<boolean>>;
   pageNumbers: number[] | undefined;
-  currentPage: number;
   setSingleCouponToBeDeleted: Dispatch<SetStateAction<string | undefined>>;
   UrlSearchParams: URLSearchParams;
 };
@@ -86,7 +84,6 @@ const CouponsTable = ({
                 handleCheckboxChange={handleCheckboxChange}
                 setShowDeleteModal={setShowDeleteModal}
                 setSingleCouponToBeDeleted={setSingleCouponToBeDeleted}
-                UrlSearchParams={UrlSearchParams}
               />
             )}
           </table>

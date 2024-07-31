@@ -43,7 +43,7 @@ const MetricCard = ({
           >
             <span className="flex items-center justify-between gap-1 w-[5rem]">
               <p className="text-xs font-normal capitalize">
-                {selectedTimeFrame && selectedTimeFrame}
+                {selectedTimeFrame}
               </p>
               <Image
                 src="/chevron-arrow-down.svg"

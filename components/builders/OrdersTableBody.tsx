@@ -7,6 +7,19 @@ type OrdersTableBodyProps = {
 };
 
 const OrdersTableBody = ({ orders }: OrdersTableBodyProps) => {
+  const getStatusClasses = (status: string) => {
+    switch (status) {
+      case "success":
+        return "bg-green-100 text-green-800";
+      case "pending":
+        return "bg-gray-100 text-gray-800";
+      case "failed":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-white";
+    }
+  };
+
   return (
     <tbody>
       {orders.map((order) => (
@@ -37,15 +50,9 @@ const OrdersTableBody = ({ orders }: OrdersTableBodyProps) => {
           </td>
           <td>
             <p
-              className={`text-sm text-center rounded-md ${
-                order.status === "success"
-                  ? "bg-green-100 text-green-800"
-                  : order.status === "pending"
-                  ? "bg-gray-100 text-gray-800"
-                  : order.status === "failed"
-                  ? "bg-red-100 text-red-800"
-                  : "bg-white"
-              }  p-2`}
+              className={`text-sm text-center rounded-md ${getStatusClasses(
+                order.status
+              )} p-2`}
             >
               {order.status}
             </p>

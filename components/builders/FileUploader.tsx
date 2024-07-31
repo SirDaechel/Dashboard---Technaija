@@ -7,10 +7,10 @@ import { convertFileToUrl } from "@/libs/utils";
 import Image from "next/image";
 
 type FileUploaderProps = {
-  type: string;
-  onFieldChange: (url: string) => void;
-  imageUrl: string;
-  setFiles: Dispatch<SetStateAction<File[]>>;
+  readonly type: string;
+  readonly onFieldChange: (url: string) => void;
+  readonly imageUrl: string;
+  readonly setFiles: Dispatch<SetStateAction<File[]>>;
 };
 
 export default function FileUploader({
@@ -18,7 +18,7 @@ export default function FileUploader({
   imageUrl,
   onFieldChange,
   setFiles,
-}: FileUploaderProps) {
+}: Readonly<FileUploaderProps>) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles(acceptedFiles);
     onFieldChange(convertFileToUrl(acceptedFiles[0]));
@@ -38,7 +38,7 @@ export default function FileUploader({
 
       {imageUrl ? (
         <div className="flex h-full w-full flex-1 justify-center">
-          <img
+          <Image
             src={imageUrl}
             alt="image"
             width={250}
@@ -48,7 +48,7 @@ export default function FileUploader({
         </div>
       ) : type === "big" ? (
         <div className="flex flex-col items-center justify-center py-5 text-grey-500">
-          <img src="/upload.svg" width={50} height={50} alt="file upload" />
+          <Image src="/upload.svg" width={50} height={50} alt="file upload" />
           <h3 className="mb-2 mt-2">Drag photo here</h3>
           <p className="p-medium-12 mb-4">SVG, PNG, JPG</p>
           <button

@@ -8,9 +8,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { createCategory } from "@/libs/actions/category.action";
+import { createCategory, getCategories } from "@/libs/actions/category.action";
 import { usePathname } from "next/navigation";
-import { getCategories } from "@/libs/actions/category.action";
 
 type AddCategoryProps = {
   selectedCategory: string;
@@ -37,10 +36,10 @@ const AddCategory = ({
 
   // Set product category by clicking on listed category
   const handleSelectCategory = (
-    e: MouseEvent<HTMLParagraphElement, globalThis.MouseEvent>
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     const category = e.currentTarget.textContent;
-    setSelectedCategory(category ? category : "Select category");
+    setSelectedCategory(category ?? "Select category");
     setOpenCategories(false);
   };
 
@@ -84,19 +83,20 @@ const AddCategory = ({
           type="button"
           className="bg-[#272829] text-white p-2 mb-3 disabled:bg-gray-100 disabled:text-[#272829] duration-200 transition disabled:duration-200 disabled:transition disabled:cursor-not-allowed"
           onClick={handleAddNewCategory}
-          disabled={!newCategory.length ? true : false}
+          disabled={!!newCategory.length}
         >
           Add
         </button>
         {categories && categories.length > 0 ? (
           categories.map((category) => (
-            <p
+            <button
+              type="button"
               key={category._id}
               className="border-b-[1px] border-b-gray-300 pb-3 cursor-pointer"
               onClick={(e) => handleSelectCategory(e)}
             >
               {category.category}
-            </p>
+            </button>
           ))
         ) : (
           <p className="text-center">No category to display</p>

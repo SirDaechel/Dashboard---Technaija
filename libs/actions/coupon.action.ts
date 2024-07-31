@@ -64,7 +64,7 @@ export const deleteCoupon = async ({ coupons, path }: deleteCouponsParams) => {
       _id: { $in: idsToDelete },
     });
 
-    revalidatePath(path ? path : "");
+    revalidatePath(path ?? "");
   } catch (error) {
     handleError(error);
   }

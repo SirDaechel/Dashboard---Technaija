@@ -8,7 +8,6 @@ type CouponTableProps = {
   handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
   setSingleCouponToBeDeleted: Dispatch<SetStateAction<string | undefined>>;
-  UrlSearchParams: URLSearchParams;
 };
 
 const CouponsTableBody = ({

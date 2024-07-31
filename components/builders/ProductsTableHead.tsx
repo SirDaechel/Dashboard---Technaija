@@ -18,14 +18,14 @@ const ProductsTableHead = ({
   const [openPriceSorting, setOpenPriceSorting] = useState(false);
 
   const filterPriceByAscendingOrder = () => {
-    const sortedproducts = sortArray(products ? products : [], "price", "asc");
-    setProducts && setProducts(sortedproducts);
+    const sortedproducts = sortArray(products ?? [], "price", "asc");
+    setProducts(sortedproducts);
     setOpenPriceSorting(false);
   };
 
   const filterPriceByDescendingOrder = () => {
-    const sortedproducts = sortArray(products ? products : [], "price", "desc");
-    setProducts && setProducts(sortedproducts);
+    const sortedproducts = sortArray(products ?? [], "price", "desc");
+    setProducts(sortedproducts);
     setOpenPriceSorting(false);
   };
 
@@ -60,7 +60,8 @@ const ProductsTableHead = ({
 
         <th>
           <div className="w-fit text-left relative">
-            <div
+            <button
+              type="button"
               className="flex items-center justify-start gap-2 cursor-pointer w-fit"
               onClick={() => setOpenPriceSorting(!openPriceSorting)}
             >
@@ -81,22 +82,24 @@ const ProductsTableHead = ({
                   alt="sort"
                 />
               </div>
-            </div>
+            </button>
 
             {openPriceSorting && (
               <div className="flex flex-col absolute bg-white py-2 px-1 rounded-lg drop-shadow-md z-10 top-full w-fit border-[1px] border-gray-300">
-                <p
+                <button
+                  type="button"
                   className="text-sm font-light py-1 px-1 cursor-pointer"
                   onClick={filterPriceByAscendingOrder}
                 >
                   acending
-                </p>
-                <p
+                </button>
+                <button
+                  type="button"
                   className="text-sm font-light py-1 px-1 cursor-pointer"
                   onClick={filterPriceByDescendingOrder}
                 >
                   descending
-                </p>
+                </button>
               </div>
             )}
           </div>

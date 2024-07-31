@@ -69,7 +69,7 @@ export const deleteProduct = async ({
       _id: { $in: idsToDelete },
     });
 
-    revalidatePath(path ? path : "");
+    revalidatePath(path ?? "");
   } catch (error) {
     handleError(error);
   }

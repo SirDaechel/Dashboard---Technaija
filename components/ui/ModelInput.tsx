@@ -26,7 +26,7 @@ const ModelInput: React.FC<ModelInputType> = ({
       if (inputValue.trim() !== "") {
         setData([...data, { text: inputValue.trim() }]);
         setInputValue("");
-        setError && setError("");
+        setError?.("");
       }
     }
   };
@@ -42,11 +42,12 @@ const ModelInput: React.FC<ModelInputType> = ({
         <ul className="flex flex-wrap items-center justify-start gap-2">
           {data.map((d, index) => (
             <li
-              key={index}
+              key={`${d}-${index}`}
               className="bg-[#272829] text-white text-sm rounded p-2 flex items-center justify-center gap-2"
             >
               {d.text}
-              <span
+              <button
+                type="button"
                 className="text-base cursor-pointer"
                 onClick={() => removeModel(index)}
               >
@@ -56,7 +57,7 @@ const ModelInput: React.FC<ModelInputType> = ({
                   height={17}
                   alt="remove-tag"
                 />
-              </span>
+              </button>
             </li>
           ))}
         </ul>
@@ -70,7 +71,7 @@ const ModelInput: React.FC<ModelInputType> = ({
           onKeyDown={(e) => addModel(e)}
         />
       </div>
-      <p className="text-red-500">{error && error}</p>
+      <p className="text-red-500">{error}</p>
     </section>
   );
 };

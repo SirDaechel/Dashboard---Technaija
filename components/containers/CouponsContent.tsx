@@ -37,14 +37,14 @@ const CouponsContent = () => {
 
   const searchParams = useSearchParams();
   const UrlSearchParams = new URLSearchParams(searchParams.toString());
-  const currentPage = parseInt(UrlSearchParams.get("page") || "1", 10);
+  const currentPage = parseInt(UrlSearchParams.get("page") ?? "1", 10);
 
   // Fetch all coupons from database on initial render
   useEffect(() => {
     const getAllCoupons = async () => {
       const couponsList = await getCoupons({
         limit: perPage,
-        page: currentPage ? currentPage : undefined,
+        page: currentPage ?? undefined,
       });
       setCoupons(couponsList?.coupons);
       setPageNumbers(couponsList?.pageNumbers);
@@ -148,9 +148,7 @@ const CouponsContent = () => {
         checkedItems={checkedItems}
         setCheckedItems={setCheckedItems}
         setShowDeleteModal={setShowDeleteModal}
-        setShowLoader2={setShowLoader2}
         pageNumbers={pageNumbers}
-        currentPage={currentPage}
         setSingleCouponToBeDeleted={setSingleCouponToBeDeleted}
         UrlSearchParams={UrlSearchParams}
       />

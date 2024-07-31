@@ -22,7 +22,7 @@ const ProductsContent = () => {
   const [showLoader, setShowLoader] = useState(true);
   const [showLoader2, setShowLoader2] = useState(false);
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
-  const [checkedProducts, setCheckedProduct] = useState<
+  const [checkedProducts, setCheckedProducts] = useState<
     {
       id: string;
     }[]
@@ -33,7 +33,7 @@ const ProductsContent = () => {
 
   const searchParams = useSearchParams();
   const UrlSearchParams = new URLSearchParams(searchParams.toString());
-  const currentPage = parseInt(UrlSearchParams.get("page") || "1", 10);
+  const currentPage = parseInt(UrlSearchParams.get("page") ?? "1", 10);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -44,7 +44,7 @@ const ProductsContent = () => {
     const fetchProducts = async () => {
       const products = await getProducts({
         limit: perPage,
-        page: currentPage ? currentPage : undefined,
+        page: currentPage ?? undefined,
       });
       setProducts(products?.products);
       setPageNumbers(products?.pageNumbers);
@@ -65,7 +65,7 @@ const ProductsContent = () => {
     const newCheckedProducts = Object.keys(checkedItems).map((key) => ({
       id: key,
     }));
-    setCheckedProduct(newCheckedProducts);
+    setCheckedProducts(newCheckedProducts);
   }, [checkedItems]);
 
   // Delete product(s) function
@@ -155,9 +155,6 @@ const ProductsContent = () => {
         setCheckedItems={setCheckedItems}
         showLoader={showLoader}
         setShowDeleteModal={setShowDeleteModal}
-        setShowLoader2={setShowLoader2}
-        pageNumbers={pageNumbers}
-        currentPage={currentPage}
         setSingleProductToBeDeleted={setSingleProductToBeDeleted}
         UrlSearchParams={UrlSearchParams}
       />

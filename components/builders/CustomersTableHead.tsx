@@ -18,22 +18,14 @@ const CustomersTableHead = ({
   const [openOrderCountSorting, setOpenOrderCountSorting] = useState(false);
 
   const filterOrdersCountByAscendingOrder = () => {
-    const sortedcustomers = sortArray(
-      customers ? customers : [],
-      "ordersCount",
-      "asc"
-    );
-    setCustomers && setCustomers(sortedcustomers);
+    const sortedcustomers = sortArray(customers ?? [], "ordersCount", "asc");
+    setCustomers?.(sortedcustomers);
     setOpenOrderCountSorting(false);
   };
 
   const filterOrdersCountByDescendingOrder = () => {
-    const sortedcustomers = sortArray(
-      customers ? customers : [],
-      "ordersCount",
-      "desc"
-    );
-    setCustomers && setCustomers(sortedcustomers);
+    const sortedcustomers = sortArray(customers ?? [], "ordersCount", "desc");
+    setCustomers?.(sortedcustomers);
     setOpenOrderCountSorting(false);
   };
 
@@ -64,7 +56,8 @@ const CustomersTableHead = ({
         </th>
         <th>
           <div className="w-fit text-left relative">
-            <div
+            <button
+              type="button"
               className="flex items-center justify-start gap-2 cursor-pointer w-fit"
               onClick={() => setOpenOrderCountSorting(!openOrderCountSorting)}
             >
@@ -85,22 +78,24 @@ const CustomersTableHead = ({
                   alt="sort"
                 />
               </div>
-            </div>
+            </button>
 
             {openOrderCountSorting && (
               <div className="flex flex-col absolute bg-white py-2 px-1 rounded-lg drop-shadow-md z-10 top-full w-fit border-[1px] border-gray-300">
-                <p
+                <button
+                  type="button"
                   className="text-sm font-light py-1 px-1 cursor-pointer"
                   onClick={filterOrdersCountByAscendingOrder}
                 >
                   acending
-                </p>
-                <p
+                </button>
+                <button
+                  type="button"
                   className="text-sm font-light py-1 px-1 cursor-pointer"
                   onClick={filterOrdersCountByDescendingOrder}
                 >
                   descending
-                </p>
+                </button>
               </div>
             )}
           </div>

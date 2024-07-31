@@ -28,14 +28,14 @@ const OrdersContent = ({ location }: OrdersContentProp) => {
 
   const currentStatus = UrlSearchParams.get("status");
 
-  const currentPage = parseInt(UrlSearchParams.get("page") || "1", 10);
+  const currentPage = parseInt(UrlSearchParams.get("page") ?? "1", 10);
 
   useEffect(() => {
     const fetchOrders = async () => {
       const fetchedOrders = await getOrders({
         limit: perPage,
-        status: currentStatus ? currentStatus : undefined,
-        page: currentPage ? currentPage : undefined,
+        status: currentStatus ?? undefined,
+        page: currentPage ?? undefined,
       });
       setOrders(fetchedOrders?.orders);
       setOrdersCount(fetchedOrders?.ordersCount);
@@ -52,10 +52,10 @@ const OrdersContent = ({ location }: OrdersContentProp) => {
     <section>
       <div className="flex items-center justify-between gap-2 m:flex-col m:items-start m:gap-4">
         <OrdersTabs
-          ordersCount={ordersCount ? ordersCount : 0}
-          ordersSuccessCount={ordersSuccessCount ? ordersSuccessCount : 0}
-          ordersPendingCount={ordersPendingCount ? ordersPendingCount : 0}
-          ordersFailedCount={ordersFailedCount ? ordersFailedCount : 0}
+          ordersCount={ordersCount ?? 0}
+          ordersSuccessCount={ordersSuccessCount ?? 0}
+          ordersPendingCount={ordersPendingCount ?? 0}
+          ordersFailedCount={ordersFailedCount ?? 0}
           UrlSearchParams={UrlSearchParams}
         />
         <PerPageDropdown perPage={perPage} setPerPage={setPerPage} />
@@ -68,7 +68,7 @@ const OrdersContent = ({ location }: OrdersContentProp) => {
       />
       {orders && orders.length > 0 && (
         <Pagination
-          pageNumbers={pageNumbers ? pageNumbers : []}
+          pageNumbers={pageNumbers ?? []}
           currentPage={currentPage}
           UrlSearchParams={UrlSearchParams}
           urlKey="page"

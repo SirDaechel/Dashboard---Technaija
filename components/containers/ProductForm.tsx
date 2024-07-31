@@ -10,8 +10,7 @@ import ModelInput from "../ui/ModelInput";
 import { toolbarOptions } from "@/libs/react-quill";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TProductSchema } from "@/libs/zod";
-import { productSchema } from "@/libs/zod";
+import { TProductSchema, productSchema } from "@/libs/zod";
 import FileUploader from "../builders/FileUploader";
 import { createProduct, updateProduct } from "@/libs/actions/product.action";
 import { useRouter } from "next/navigation";
@@ -304,8 +303,6 @@ const ProductForm = ({ type, product }: ProductFormProps) => {
               !selectedCategory.length ||
               selectedCategory === "Select category" ||
               isSubmitting
-                ? true
-                : false
             }
           >
             {isSubmitting

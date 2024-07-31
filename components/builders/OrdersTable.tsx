@@ -24,10 +24,7 @@ const OrdersTable = ({
       {!showLoader ? (
         <>
           <table className="w-full">
-            <OrdersTableHead
-              orders={orders}
-              setOrders={setOrders && setOrders}
-            />
+            <OrdersTableHead orders={orders} setOrders={setOrders} />
             {orders && orders.length > 0 && <OrdersTableBody orders={orders} />}
           </table>
           {!orders ? (

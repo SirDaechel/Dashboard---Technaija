@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 
 type ProductGalleryProps = {
   gallery: {
@@ -19,7 +19,7 @@ const ProductGallery = ({ gallery, setGallery }: ProductGalleryProps) => {
 
   // Select image from file manager then convert to URL
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
+    const file = event.target.files?.[0];
     const reader = new FileReader();
 
     reader.onloadend = () => {
@@ -46,7 +46,7 @@ const ProductGallery = ({ gallery, setGallery }: ProductGalleryProps) => {
     <span className="grid grid-cols-3 items-center justify-center gap-1">
       {gallery.length > 0 &&
         gallery.map((img, index) => (
-          <div key={index} className="relative group w-max">
+          <div key={`${img}-${index}`} className="relative group w-max">
             <Image
               className="cursor-pointer duration-200 group-hover:opacity-20 group-hover:transition group-hover:duration-200"
               src={img.image}
@@ -55,15 +55,17 @@ const ProductGallery = ({ gallery, setGallery }: ProductGalleryProps) => {
               quality={100}
               alt="product-thumbnail"
             />
-            <p
+            <button
+              type="button"
               className="hidden center text-red-500 cursor-pointer group-hover:flex"
               onClick={() => removeImg(index)}
             >
               remove
-            </p>
+            </button>
           </div>
         ))}
-      <div
+      <button
+        type="button"
         className="relative bg-gray-200 w-[4.5rem] h-[4.5rem] border-solid border-[1px] border-[#272829] flex items-center justify-center cursor-pointer"
         onClick={handleButtonClick}
       >
@@ -82,7 +84,7 @@ const ProductGallery = ({ gallery, setGallery }: ProductGalleryProps) => {
           height={25}
           alt="add-img"
         />
-      </div>
+      </button>
     </span>
   );
 };

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 export default function MetricCards() {
   const [totalRevenue, setTotalRevenue] = useState("");
   const [totalOrders, setTotalOrders] = useState("");
-  const [totalProfit, setTotaProfit] = useState("");
+  const [totalProfit, setTotalProfit] = useState("");
   const [revenuePercentage, setRevenuePercentage] = useState<number>();
   const [ordersPercentage, setOrdersPercentage] = useState<number>();
   const [profitPercentage, setProfitPercentage] = useState<number>();
@@ -56,7 +56,7 @@ export default function MetricCards() {
       );
 
       // On initial render, set the total profit for the last six months
-      setTotaProfit(
+      setTotalProfit(
         formatNumber(
           totalProfit?.lastSixMonthProfit ? totalProfit?.lastSixMonthProfit : 0,
           "₦"
@@ -76,6 +76,12 @@ export default function MetricCards() {
     initialMetricValues();
   }, []);
 
+  const getIcon2 = (percentage: number | undefined) => {
+    if (percentage === undefined) return null;
+    if (percentage > 0) return "/up-arrow.svg";
+    return "/down-arrow.svg";
+  };
+
   return (
     <section className="w-full grid grid-cols-3 col-span-3 gap-4 m:flex m:flex-col">
       <MetricCard
@@ -83,13 +89,7 @@ export default function MetricCards() {
         title="Total Revenue"
         data={totalRevenue}
         icon={"/wallet.svg"}
-        icon2={
-          revenuePercentage && revenuePercentage > 0
-            ? "/up-arrow.svg"
-            : revenuePercentage && revenuePercentage <= 0
-            ? "/down-arrow.svg"
-            : null
-        }
+        icon2={getIcon2(revenuePercentage)}
         setter={setTotalRevenue}
         percentageValue={revenuePercentage}
         percentageSetter={setRevenuePercentage}
@@ -99,13 +99,7 @@ export default function MetricCards() {
         title="Total Orders"
         data={totalOrders}
         icon={"/basket.svg"}
-        icon2={
-          ordersPercentage && ordersPercentage > 0
-            ? "/up-arrow.svg"
-            : ordersPercentage && ordersPercentage <= 0
-            ? "/down-arrow.svg"
-            : null
-        }
+        icon2={getIcon2(ordersPercentage)}
         setter={setTotalOrders}
         percentageValue={ordersPercentage}
         percentageSetter={setOrdersPercentage}
@@ -115,14 +109,8 @@ export default function MetricCards() {
         title="Total Profit"
         data={totalProfit}
         icon={"/cash.svg"}
-        icon2={
-          profitPercentage && profitPercentage > 0
-            ? "/up-arrow.svg"
-            : profitPercentage && profitPercentage <= 0
-            ? "/down-arrow.svg"
-            : null
-        }
-        setter={setTotaProfit}
+        icon2={getIcon2(profitPercentage)}
+        setter={setTotalProfit}
         percentageValue={profitPercentage}
         percentageSetter={setProfitPercentage}
       />

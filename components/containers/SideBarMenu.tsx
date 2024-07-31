@@ -17,7 +17,7 @@ const SideBarMenu = ({ closeMobileMenu }: SideBarMenuProps) => {
         alt="logo"
       />
       <section className="flex flex-col h-full justify-between m:gap-10 m:w-full">
-        <SideBarNav closeMobileMenu={closeMobileMenu && closeMobileMenu} />
+        <SideBarNav closeMobileMenu={closeMobileMenu} />
         <Link
           href="https://technaija.vercel.app/"
           target="_blank"

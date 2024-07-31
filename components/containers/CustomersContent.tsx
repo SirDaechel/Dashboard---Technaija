@@ -2,7 +2,6 @@
 
 import {
   deleteCustomer,
-  getCustomers,
   getCustomersWithOrderCount,
 } from "@/libs/actions/customer.action";
 import CustomersTable from "../builders/CustomersTable";
@@ -22,7 +21,6 @@ const CustomersContent = () => {
   const [pageNumbers, setPageNumbers] = useState<number[]>();
   const [customers, setCustomers] = useState<UsersWithOrderCount[]>();
   const [showLoader, setShowLoader] = useState(true);
-  const [showLoader2, setShowLoader2] = useState(false);
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
   const [checkedCustomers, setCheckedCustomers] = useState<
     {
@@ -44,7 +42,7 @@ const CustomersContent = () => {
     const fetchCustomers = async () => {
       const customers = await getCustomersWithOrderCount({
         limit: perPage,
-        page: currentPage ? currentPage : undefined,
+        page: currentPage ?? undefined,
       });
       setCustomers(customers?.customers);
       setPageNumbers(customers?.pageNumbers);
@@ -69,8 +67,6 @@ const CustomersContent = () => {
   }, [checkedItems]);
 
   const deleteCustomers = async () => {
-    if (customers && customers.length <= 1) setShowLoader2(true);
-
     // If customerId is true, then make it into an array and pass it as the value to the "customers" key in the deleteCustomer function
     const idToArray = singleCustomerToBeDeleted
       ? [{ id: singleCustomerToBeDeleted }]
@@ -109,8 +105,6 @@ const CustomersContent = () => {
       // Push the created URL string to the URL
       router.push(`${pageURL}`);
     }
-
-    if (customers && customers.length <= 1) setShowLoader2(false);
 
     if (customers && customers.length > 1) window.location.reload();
   };

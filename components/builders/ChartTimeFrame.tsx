@@ -19,7 +19,7 @@ const ChartTimeFrame = ({
   setShowLoader,
 }: MetricTimeFrameProp) => {
   const handleTimeFrame = async (
-    e: MouseEvent<HTMLLIElement, globalThis.MouseEvent>
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     setSelectedTimeFrame(e.currentTarget.textContent);
     setShowLoader(true);
@@ -28,8 +28,8 @@ const ChartTimeFrame = ({
     if (e.currentTarget?.textContent === "This year") {
       setShowTimeFrame(false);
       const retrivedChartData = await getEachMonthOrderCount();
-      setMonths(retrivedChartData && retrivedChartData.months);
-      setOrderCount(retrivedChartData && retrivedChartData.ordersCount);
+      setMonths(retrivedChartData?.months);
+      setOrderCount(retrivedChartData?.ordersCount);
     }
 
     // If last year is selected
@@ -37,8 +37,8 @@ const ChartTimeFrame = ({
       setShowTimeFrame(false);
       // Pass an argument of 1 to subtract the current year by 1
       const retrivedChartData = await getEachMonthOrderCount(1);
-      setMonths(retrivedChartData && retrivedChartData.months);
-      setOrderCount(retrivedChartData && retrivedChartData.ordersCount);
+      setMonths(retrivedChartData?.months);
+      setOrderCount(retrivedChartData?.ordersCount);
     }
 
     setShowLoader(false);
@@ -48,18 +48,20 @@ const ChartTimeFrame = ({
     <>
       {showTimeFrame && (
         <ul className="mt-2 absolute w-full items-center justify-center border-[1px] border-gray-300 bg-white drop-shadow">
-          <li
+          <button
+            type="button"
             className="capitalize w-full text-sm cursor-pointer p-1 text-center hover:bg-gray-200 hover:transition"
             onClick={(e) => handleTimeFrame(e)}
           >
             This year
-          </li>
-          <li
+          </button>
+          <button
+            type="button"
             className="capitalize w-full text-sm cursor-pointer p-1 text-center hover:bg-gray-200 hover:transition"
             onClick={(e) => handleTimeFrame(e)}
           >
             Last year
-          </li>
+          </button>
         </ul>
       )}
     </>

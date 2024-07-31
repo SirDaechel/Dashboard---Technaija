@@ -30,7 +30,7 @@ const MetricTimeFrame = ({
 }: MetricTimeFrameProp) => {
   // Change time frame
   const handleTimeFrame = async (
-    e: MouseEvent<HTMLLIElement, globalThis.MouseEvent>
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     setSelectedTimeFrame(e.currentTarget.textContent);
 
@@ -141,30 +141,34 @@ const MetricTimeFrame = ({
     <>
       {showTimeFrame && (
         <ul className="mt-2 absolute w-full items-center justify-center border-[1px] border-gray-300 bg-white drop-shadow">
-          <li
+          <button
+            type="button"
             className="capitalize w-full text-sm cursor-pointer p-1 text-center hover:bg-gray-200 hover:transition"
             onClick={(e) => handleTimeFrame(e)}
           >
             today
-          </li>
-          <li
+          </button>
+          <button
+            type="button"
             className="capitalize w-full text-sm cursor-pointer p-1 text-center hover:bg-gray-200 hover:transition"
             onClick={(e) => handleTimeFrame(e)}
           >
             last month
-          </li>
-          <li
+          </button>
+          <button
+            type="button"
             className="capitalize w-full text-sm cursor-pointer p-1 text-center hover:bg-gray-200 hover:transition"
             onClick={(e) => handleTimeFrame(e)}
           >
             6 months
-          </li>
-          <li
+          </button>
+          <button
+            type="button"
             className="capitalize w-full text-sm cursor-pointer p-1 text-center hover:bg-gray-200 hover:transition"
             onClick={(e) => handleTimeFrame(e)}
           >
             all time
-          </li>
+          </button>
         </ul>
       )}
     </>

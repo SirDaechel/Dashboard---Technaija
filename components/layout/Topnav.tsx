@@ -1,7 +1,5 @@
 "use client";
 
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import LinkButton from "../ui/LinkButton";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
@@ -15,6 +13,21 @@ const Topnav = () => {
     dispatch(setOpenMobileMenu(true));
   };
 
+  const getHeaderText = (pathname: string) => {
+    const pathMap: { [key: string]: string } = {
+      "/": "Dashboard / Overview",
+      "/orders": "Orders",
+      "/products": "Products",
+      "/products/create-product": "Create product",
+      "/products/edit-product": "Edit product",
+      "/customers": "Customers",
+      "/coupons": "Coupons",
+      "/coupons/create-coupon": "Coupons",
+    };
+
+    return pathMap[pathname] || "Technaija";
+  };
+
   return (
     <header className="w-full py-4 px-6 border-b-[1px] border-b-gray-00 drop-shadow-md m:fixed m:bg-white m:z-[25]">
       <nav className="flex items-center justify-between">
@@ -26,35 +39,7 @@ const Topnav = () => {
           alt="menu"
           onClick={openMobileMenu}
         />
-        <h3 className="text-[#272829]">
-          {pathname === "/"
-            ? "Dashboard / Overview"
-            : pathname === "/orders"
-            ? "Orders"
-            : pathname === "/products"
-            ? "Products"
-            : pathname === "/products/create-product"
-            ? "Create product"
-            : pathname === "/products/edit-product"
-            ? "Edit product"
-            : pathname === "/customers"
-            ? "Customers"
-            : pathname === "/coupons"
-            ? "Coupons"
-            : pathname === "/coupons/create-coupon"
-            ? "Coupons"
-            : "Technaija"}
-        </h3>
-        <SignedOut>
-          <LinkButton
-            link="/sign-in"
-            classname="bg-[#272829] py-1 px-3 rounded text-white"
-            text="Sign In"
-          />
-        </SignedOut>
-        <SignedIn>
-          <UserButton afterSignOutUrl="/" />
-        </SignedIn>
+        <h3 className="text-[#272829]">{getHeaderText(pathname)}</h3>
       </nav>
     </header>
   );

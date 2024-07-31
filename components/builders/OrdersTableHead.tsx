@@ -14,25 +14,25 @@ const OrdersTableHead = ({ orders, setOrders }: OrdersTableHeadProps) => {
   const [openAmountSorting, setOpenAmountSorting] = useState(false);
 
   const filterDateByAscendingOrder = () => {
-    const sortedOrders = sortArray(orders ? orders : [], "date", "asc");
+    const sortedOrders = sortArray(orders ?? [], "date", "asc");
     setOrders && setOrders(sortedOrders);
     setOpenDateSorting(false);
   };
 
   const filterDateByDescendingOrder = () => {
-    const sortedOrders = sortArray(orders ? orders : [], "date", "desc");
+    const sortedOrders = sortArray(orders ?? [], "date", "desc");
     setOrders && setOrders(sortedOrders);
     setOpenDateSorting(false);
   };
 
   const filterAmountByAscendingOrder = () => {
-    const sortedOrders = sortArray(orders ? orders : [], "amount", "asc");
+    const sortedOrders = sortArray(orders ?? [], "amount", "asc");
     setOrders && setOrders(sortedOrders);
     setOpenAmountSorting(false);
   };
 
   const filterAmountByDescendingOrder = () => {
-    const sortedOrders = sortArray(orders ? orders : [], "amount", "desc");
+    const sortedOrders = sortArray(orders ?? [], "amount", "desc");
     setOrders && setOrders(sortedOrders);
     setOpenAmountSorting(false);
   };
@@ -46,7 +46,8 @@ const OrdersTableHead = ({ orders, setOrders }: OrdersTableHeadProps) => {
 
         <th>
           <div className="w-fit text-left relative">
-            <div
+            <button
+              type="button"
               className="flex items-center justify-start gap-2 cursor-pointer w-fit"
               onClick={() => setOpenDateSorting(!openDateSorting)}
             >
@@ -67,22 +68,24 @@ const OrdersTableHead = ({ orders, setOrders }: OrdersTableHeadProps) => {
                   alt="sort"
                 />
               </div>
-            </div>
+            </button>
 
             {openDateSorting && (
               <div className="flex flex-col absolute bg-white py-2 px-1 rounded-lg drop-shadow-md z-10 top-full w-fit border-[1px] border-gray-300">
-                <p
+                <button
+                  type="button"
                   className="text-sm font-light py-1 px-1 cursor-pointer"
                   onClick={filterDateByAscendingOrder}
                 >
                   acending
-                </p>
-                <p
+                </button>
+                <button
+                  type="button"
                   className="text-sm font-light py-1 px-1 cursor-pointer"
                   onClick={filterDateByDescendingOrder}
                 >
                   descending
-                </p>
+                </button>
               </div>
             )}
           </div>
@@ -90,7 +93,8 @@ const OrdersTableHead = ({ orders, setOrders }: OrdersTableHeadProps) => {
 
         <th>
           <div className="w-fit text-left relative">
-            <div
+            <button
+              type="button"
               className="flex items-center justify-start gap-2 cursor-pointer w-fit"
               onClick={() => setOpenAmountSorting(!openAmountSorting)}
             >
@@ -111,22 +115,24 @@ const OrdersTableHead = ({ orders, setOrders }: OrdersTableHeadProps) => {
                   alt="sort"
                 />
               </div>
-            </div>
+            </button>
 
             {openAmountSorting && (
               <div className="flex flex-col absolute bg-white py-2 px-1 rounded-lg drop-shadow-md z-10 top-full w-fit border-[1px] border-gray-300">
-                <p
+                <button
+                  type="button"
                   className="text-sm font-light py-1 px-1 cursor-pointer"
                   onClick={filterAmountByAscendingOrder}
                 >
                   acending
-                </p>
-                <p
+                </button>
+                <button
+                  type="button"
                   className="text-sm font-light py-1 px-1 cursor-pointer"
                   onClick={filterAmountByDescendingOrder}
                 >
                   descending
-                </p>
+                </button>
               </div>
             )}
           </div>

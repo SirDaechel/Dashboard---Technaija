@@ -14,9 +14,6 @@ type ProductTableProps = {
   setCheckedItems: Dispatch<SetStateAction<CheckedItems>>;
   showLoader?: boolean;
   setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
-  setShowLoader2: Dispatch<SetStateAction<boolean>>;
-  pageNumbers: number[] | undefined;
-  currentPage: number;
   setSingleProductToBeDeleted: Dispatch<SetStateAction<string | undefined>>;
   UrlSearchParams: URLSearchParams;
 };

@@ -23,23 +23,24 @@ const OrdersTabs = ({
     UrlSearchParams.set("page", "1");
     UrlSearchParams.set("status", tab);
     // Call the function that creates a URL string with the data from UrlSearchParams
-    const statusURL = createURL(pathname, UrlSearchParams);
+    const url = createURL(pathname, UrlSearchParams);
     // Push the created URL string to the URL
-    router.push(`${statusURL}`);
+    router.push(url);
   };
 
   const removeTabFromURL = () => {
     UrlSearchParams.delete("page");
     UrlSearchParams.delete("status");
     // Call the function that creates a URL string with the data from UrlSearchParams
-    const statusURL = createURL(pathname, UrlSearchParams);
+    const url = createURL(pathname, UrlSearchParams);
     // Push the created URL string to the URL
-    router.push(`${statusURL}`);
+    router.push(url);
   };
 
   return (
     <div className="w-fit mt-4 border-[1px] border-gray-300 p-2 flex items-center gap-2 m:overflow-x-auto m:w-full">
-      <p
+      <button
+        type="button"
         className={`flex gap-2 text-sm p-2 hover:bg-[#272829] hover:text-white hover:transition rounded cursor-pointer m:min-w-fit ${
           UrlSearchParams.get("status") === null
             ? "bg-[#272829] text-white"
@@ -47,9 +48,10 @@ const OrdersTabs = ({
         }`}
         onClick={() => removeTabFromURL()}
       >
-        All Orders - {ordersCount && ordersCount}
-      </p>
-      <p
+        All Orders - {ordersCount}
+      </button>
+      <button
+        type="button"
         className={`text-sm p-2 hover:bg-[#272829] hover:text-white hover:transition rounded cursor-pointer m:min-w-fit ${
           UrlSearchParams.get("status") === "success"
             ? "bg-[#272829] text-white"
@@ -57,9 +59,10 @@ const OrdersTabs = ({
         }`}
         onClick={() => handleTabChange("success")}
       >
-        Success - {ordersSuccessCount && ordersSuccessCount}
-      </p>
-      <p
+        Success - {ordersSuccessCount}
+      </button>
+      <button
+        type="button"
         className={`text-sm p-2 hover:bg-[#272829] hover:text-white hover:transition rounded cursor-pointer m:min-w-fit ${
           UrlSearchParams.get("status") === "pending"
             ? "bg-[#272829] text-white"
@@ -67,9 +70,10 @@ const OrdersTabs = ({
         }`}
         onClick={() => handleTabChange("pending")}
       >
-        Pending - {ordersPendingCount && ordersPendingCount}
-      </p>
-      <p
+        Pending - {ordersPendingCount}
+      </button>
+      <button
+        type="button"
         className={`text-sm p-2 hover:bg-[#272829] hover:text-white hover:transition rounded cursor-pointer m:min-w-fit ${
           UrlSearchParams.get("status") === "failed"
             ? "bg-[#272829] text-white"
@@ -77,8 +81,8 @@ const OrdersTabs = ({
         }`}
         onClick={() => handleTabChange("failed")}
       >
-        Failed - {ordersFailedCount && ordersFailedCount}
-      </p>
+        Failed - {ordersFailedCount}
+      </button>
     </div>
   );
 };
