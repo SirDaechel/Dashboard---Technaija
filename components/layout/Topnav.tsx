@@ -30,7 +30,7 @@ const Topnav = () => {
 
   return (
     <header className="w-full py-4 px-6 border-b-[1px] border-b-gray-00 drop-shadow-md m:fixed m:bg-white m:z-[25]">
-      <nav className="flex items-center justify-between">
+      <nav className="flex items-center">
         <Image
           className="xl:hidden xxl:hidden xxxl:hidden ultra:hidden"
           src="menu.svg"
@@ -39,7 +39,9 @@ const Topnav = () => {
           alt="menu"
           onClick={openMobileMenu}
         />
-        <h3 className="text-[#272829]">{getHeaderText(pathname)}</h3>
+        <h3 className="text-[#272829] m:text-center m:w-full">
+          {getHeaderText(pathname)}
+        </h3>
       </nav>
     </header>
   );
