@@ -176,7 +176,7 @@ const ProductForm = ({ type, product }: ProductFormProps) => {
                   )
                 }
               />
-              <span>
+              <span className="m:mb-12">
                 <p className="font-light">
                   Short Description <span>(Optional)</span>
                 </p>
@@ -233,7 +233,7 @@ const ProductForm = ({ type, product }: ProductFormProps) => {
             <div>
               <h2 className="font-medium text-lg mb-4">More Details</h2>
               <div className="flex flex-col">
-                <span>
+                <span className="m:mb-12">
                   <p className="font-light">
                     Main Description <span className="text-red-400">*</span>
                   </p>

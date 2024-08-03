@@ -21,7 +21,7 @@ const SideBarMenu = ({ closeMobileMenu }: SideBarMenuProps) => {
         <Link
           href="https://technaija.vercel.app/"
           target="_blank"
-          className="w-full flex gap-2 py-2 px-3 bg-white text-[#272829] text-center text-sm font-medium rounded-md m:bg-transparent m:text-white m:mb-20 m:text-xl m:rounded-none m:w-full m:justify-center"
+          className="w-full flex gap-2 py-2 px-3 bg-white text-[#272829] text-center text-sm font-medium m:bg-transparent m:text-white m:mb-20 m:text-xl m:w-full m:justify-center"
         >
           <p>Visit Technaija</p>
           <Image
